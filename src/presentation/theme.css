@@ -23,15 +23,59 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--pres-text);
   font-size: 24px;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden !important;
 }
 
 .reveal .slides {
   text-align: left !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
 .reveal .slides section {
-  padding: 40px 60px 60px 60px;
+  padding: 2rem;
   box-sizing: border-box;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Nested vertical sections need same treatment */
+.reveal .slides section > section {
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Dense content slides: scale text down */
+.slide-dense-content {
+  font-size: clamp(0.6rem, 1.2vw, 0.95rem) !important;
+}
+
+.slide-dense-content td,
+.slide-dense-content th,
+.slide-dense-content li,
+.slide-dense-content pre,
+.slide-dense-content code {
+  font-size: clamp(0.55rem, 1.1vw, 0.85rem) !important;
+}
+
+/* Scrollable inner containers for heavy-content slides */
+.slide-scroll-container {
+  overflow-y: auto;
+  max-height: 65vh;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Hex grid background */
