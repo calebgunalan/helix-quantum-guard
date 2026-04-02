@@ -1,4 +1,4 @@
-@import 'reveal.js/dist/reveal.css';
+@import '/node_modules/reveal.js/dist/reveal.css';
 
 /* HelixID Presentation Theme */
 :root {
