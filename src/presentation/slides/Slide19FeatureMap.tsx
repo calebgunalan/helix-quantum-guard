@@ -13,8 +13,9 @@ const features = [
 
 export default function Slide19FeatureMap() {
   return (
-    <section data-transition="slide">
+    <section data-transition="slide" className="slide-dense-content">
       <h2>Complete IAM Feature Coverage</h2>
+      <div className="slide-scroll-container" style={{ marginTop: '16px' }}>
       <table className="comparison-table" style={{ marginTop: '16px' }}>
         <thead>
           <tr>
