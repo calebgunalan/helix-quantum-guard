@@ -57,6 +57,7 @@ export default function Slide01Title() {
 
         <div style={{ marginTop: '80px', fontSize: '0.75em', color: '#64748b' }}>
           <p>{PRESENTER_NAME} · {INSTITUTION_NAME}</p>
+          <p style={{ marginTop: '0.5em' }}>Guided by · Dr. P. Deepalakshmi</p>
           <p>{PRESENTATION_DATE}</p>
         </div>
 
