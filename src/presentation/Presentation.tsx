@@ -90,12 +90,18 @@ export default function Presentation() {
     revealRef.current?.toggleOverview();
   };
 
+  const handleExportPptx = useCallback(async () => {
+    const { exportToPptx } = await import('./exportPptx');
+    await exportToPptx();
+  }, []);
+
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#0a0f1e' }}>
       {/* Floating toolbar */}
       <div className="pres-toolbar">
         <button onClick={toggleFullscreen} title="Fullscreen">⛶ Fullscreen</button>
         <button onClick={toggleOverview} title="Overview Grid">🏠 Overview</button>
+        <button onClick={handleExportPptx} title="Download PPTX">📥 Download PPTX</button>
       </div>
 
       {/* Slide counter */}
