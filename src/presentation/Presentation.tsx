@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import Reveal from 'reveal.js';
 import '../presentation/theme.css';
 import { TOTAL_SLIDES, HELIX_ID_DEMO_URL } from '../presentation/constants';
@@ -47,16 +47,18 @@ export default function Presentation() {
       hash: true,
       controls: true,
       progress: true,
-      center: false,
+      center: true,
       transition: 'slide',
       transitionSpeed: 'default',
       keyboard: true,
       touch: true,
-      width: 960,
-      height: 700,
+      width: '100%',
+      height: '100%',
       margin: 0.04,
       minScale: 0.2,
       maxScale: 2.0,
+      disableLayout: false,
+      embedded: false,
       fragments: true,
       overview: true,
     });
@@ -88,12 +90,18 @@ export default function Presentation() {
     revealRef.current?.toggleOverview();
   };
 
+  const handleExportPptx = useCallback(async () => {
+    const { exportToPptx } = await import('./exportPptx');
+    await exportToPptx();
+  }, []);
+
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#0a0f1e' }}>
       {/* Floating toolbar */}
       <div className="pres-toolbar">
         <button onClick={toggleFullscreen} title="Fullscreen">⛶ Fullscreen</button>
         <button onClick={toggleOverview} title="Overview Grid">🏠 Overview</button>
+        <button onClick={handleExportPptx} title="Download PPTX">📥 Download PPTX</button>
       </div>
 
       {/* Slide counter */}

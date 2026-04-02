@@ -36,9 +36,9 @@ export default function Slide09LitSurvey() {
       </section>
 
       {/* Sub-slide B: Reference table */}
-      <section data-transition="fade">
+      <section data-transition="fade" className="slide-dense-content">
         <h2 style={{ fontSize: '1.2em' }}>Key Literature and Standards Referenced</h2>
-        <div style={{ marginTop: '16px', overflowY: 'auto', maxHeight: '500px' }}>
+        <div className="slide-scroll-container" style={{ marginTop: '16px' }}>
           <table className="comparison-table" style={{ fontSize: '0.62em' }}>
             <thead>
               <tr>

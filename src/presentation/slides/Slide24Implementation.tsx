@@ -2,7 +2,7 @@ export default function Slide24Implementation() {
   return (
     <section>
       {/* Sub-slide A: Codebase */}
-      <section data-transition="fade">
+      <section data-transition="fade" className="slide-dense-content">
         <h2>How the System Was Built</h2>
         <div style={{ display: 'flex', gap: '28px', marginTop: '20px' }}>
           <div style={{ flex: '0 0 48%' }}>
