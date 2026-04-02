@@ -35,8 +35,8 @@ export default function Slide19FeatureMap() {
             </tr>
           ))}
         </tbody>
-      </table>
-
+      </div>
+      </div>
       <aside className="notes">
         The visual density of this table communicates system completeness at a glance. Every row is a feature
         that has both a blockchain event and quantum-resistant protection. Advance one row at a time.
