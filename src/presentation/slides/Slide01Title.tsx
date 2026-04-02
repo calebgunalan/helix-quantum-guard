@@ -56,7 +56,10 @@ export default function Slide01Title() {
         </p>
 
         <div style={{ marginTop: '80px', fontSize: '0.75em', color: '#64748b' }}>
-          <p>{PRESENTER_NAME} · {INSTITUTION_NAME}</p>
+          <p style={{ whiteSpace: 'pre-line' }}>
+            {PRESENTER_NAME} · {INSTITUTION_NAME}{'\n\n'}
+            Guided by · Dr. P. Deepalakshmi
+          </p>
           <p>{PRESENTATION_DATE}</p>
         </div>
 
