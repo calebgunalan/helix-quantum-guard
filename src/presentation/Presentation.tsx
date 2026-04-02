@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import Reveal from 'reveal.js';
 import '../presentation/theme.css';
 import { TOTAL_SLIDES, HELIX_ID_DEMO_URL } from '../presentation/constants';
