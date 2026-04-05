@@ -2,7 +2,7 @@ import { HELIX_ID_DEMO_URL, GITHUB_URL } from '../constants';
 
 export default function Slide30Closing() {
   return (
-    <section data-transition="fade" className="slide-title-full">
+    <section data-auto-animate data-transition="fade" className="slide-title-full">
       {/* Reuse network animation from title slide */}
       <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 0, opacity: 0.1 }}>
         <defs>
@@ -38,7 +38,7 @@ export default function Slide30Closing() {
 
         <p style={{ fontSize: '1em', color: '#00d4ff', marginTop: '40px', fontWeight: 600 }}>HelixID answers that question.</p>
 
-        <h1 style={{ fontSize: '3em', fontWeight: 900, color: '#00d4ff', letterSpacing: '-0.04em', marginTop: '32px', textAlign: 'center' }}>
+        <h1 data-id="helix-wordmark" style={{ fontSize: '3em', fontWeight: 900, color: '#00d4ff', letterSpacing: '-0.04em', marginTop: '32px', textAlign: 'center' }}>
           HelixID
         </h1>
 
