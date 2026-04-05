@@ -36,7 +36,7 @@ const phases = [
 
 export default function Slide29Roadmap() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Production Path Forward</h2>
       <div className="grid-3" style={{ marginTop: '32px', gap: '20px' }}>
         {phases.map((p) => (

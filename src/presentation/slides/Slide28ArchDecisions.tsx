@@ -15,7 +15,7 @@ const qas = [
 
 export default function Slide28ArchDecisions() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Why These Specific Technology Choices</h2>
       <div style={{ marginTop: '28px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {qas.map((qa, i) => (

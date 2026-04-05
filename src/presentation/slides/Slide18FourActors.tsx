@@ -7,7 +7,7 @@ const actors = [
 
 export default function Slide18FourActors() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <div className="section-number">03</div>
       <div style={{ position: 'relative', zIndex: 1 }}>
         <h3 style={{ fontSize: '0.85em', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '32px', color: '#00d4ff' }}>

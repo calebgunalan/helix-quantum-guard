@@ -20,7 +20,7 @@ function StatusCell({ val }: { val: string }) {
 
 export default function Slide39ComparativeAnalysis() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>Comparative Analysis with Existing Systems</h2>
       <div className="slide-scroll-container" style={{ marginTop: '10px' }}>
         <table className="comparison-table" style={{ fontSize: '0.5em' }}>

@@ -9,7 +9,7 @@ const achievements = [
 
 export default function Slide27Achievements() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>What This Project Delivers</h2>
       <div className="grid-2x3" style={{ marginTop: '24px', gap: '16px' }}>
         {achievements.map((a) => (

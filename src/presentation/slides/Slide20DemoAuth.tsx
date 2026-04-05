@@ -2,7 +2,7 @@ export default function Slide20DemoAuth() {
   return (
     <section>
       {/* Sub-slide A: Auth flow */}
-      <section data-transition="fade">
+      <section data-auto-animate data-transition="fade">
         <h2>Demo: Quantum-Safe Login</h2>
         <div style={{ display: 'flex', gap: '32px', marginTop: '24px' }}>
           {/* Flow diagram */}
@@ -43,7 +43,7 @@ export default function Slide20DemoAuth() {
       </section>
 
       {/* Sub-slide B: Why quantum-resistant */}
-      <section data-transition="fade">
+      <section data-auto-animate data-transition="fade">
         <h2>What Makes This Quantum-Resistant</h2>
         <div className="grid-2" style={{ marginTop: '32px', gap: '28px' }}>
           <div className="pres-card pres-card-danger" style={{ padding: '28px' }}>

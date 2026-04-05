@@ -18,7 +18,7 @@ const columns = [
 
 export default function Slide06WhyHealthcare() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Healthcare: The Highest-Stakes Target</h2>
       <div className="grid-3" style={{ marginTop: '32px' }}>
         {columns.map((col) => (

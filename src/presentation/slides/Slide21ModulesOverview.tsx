@@ -29,7 +29,7 @@ const layers = [
 
 export default function Slide21ModulesOverview() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2 style={{ fontSize: '1.1em' }}>List of Modules</h2>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '20px' }}>
         {layers.map((layer) => (

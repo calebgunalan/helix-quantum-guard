@@ -24,7 +24,7 @@ export default function Slide08ExistingSystem() {
   ];
 
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2 style={{ fontSize: '1.1em' }}>Existing Systems — How Healthcare IAM Works Today</h2>
       <div className="grid-3" style={{ marginTop: '20px', gap: '16px' }}>
         {columns.map((c) => (

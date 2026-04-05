@@ -6,7 +6,7 @@ const paragraphs = [
 
 export default function Slide10ProblemStatement() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Problem Statement</h2>
       <div style={{ marginTop: '24px', maxWidth: '820px' }}>
         {paragraphs.map((p, i) => (

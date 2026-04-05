@@ -9,7 +9,7 @@ const objectives = [
 
 export default function Slide03Objectives() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Project Objectives</h2>
       <div className="grid-2" style={{ marginTop: '20px' }}>
         {objectives.map((obj) => (

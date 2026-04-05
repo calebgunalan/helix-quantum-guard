@@ -1,6 +1,6 @@
 export default function Slide16SmartContract() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Access Policies That Enforce Themselves</h2>
 
       <div className="policy-card fragment" style={{ marginTop: '24px', maxWidth: '600px' }}>

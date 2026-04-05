@@ -1,6 +1,6 @@
 export default function Slide22DemoTamper() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Demo: Why the Audit Trail Cannot Be Falsified</h2>
       <div className="grid-2" style={{ marginTop: '28px', gap: '28px' }}>
         {/* Before */}

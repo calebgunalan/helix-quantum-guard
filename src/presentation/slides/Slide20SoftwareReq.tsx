@@ -43,7 +43,7 @@ const quadrants = [
 
 export default function Slide20SoftwareReq() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1.05em' }}>Software Requirements</h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '14px' }}>
         {quadrants.map((q) => (

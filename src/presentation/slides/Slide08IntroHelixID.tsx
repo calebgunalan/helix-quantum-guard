@@ -1,6 +1,6 @@
 export default function Slide08IntroHelixID() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <div className="section-number">02</div>
       <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '80%', textAlign: 'center' }}>
         <h3 style={{ fontSize: '0.85em', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '40px' }}>

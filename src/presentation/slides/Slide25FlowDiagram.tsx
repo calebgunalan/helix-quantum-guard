@@ -1,6 +1,6 @@
 export default function Slide25FlowDiagram() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>System Flow Diagram — End-to-End IAM Workflow</h2>
       <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
         <svg viewBox="0 0 800 520" style={{ width: '90%', maxHeight: '68vh' }}>

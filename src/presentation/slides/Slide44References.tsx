@@ -19,7 +19,7 @@ const refs = [
 
 export default function Slide44References() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>References</h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 20px', marginTop: '14px' }}>
         {refs.map((r, i) => (

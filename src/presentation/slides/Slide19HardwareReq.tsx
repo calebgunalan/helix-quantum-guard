@@ -2,7 +2,7 @@ export default function Slide19HardwareReq() {
   return (
     <section>
       {/* Sub-slide A: Demo Environment */}
-      <section data-transition="slide" className="slide-dense-content">
+      <section data-auto-animate data-transition="slide" className="slide-dense-content">
         <h2 style={{ fontSize: '1.05em' }}>Hardware Requirements — Demo Environment</h2>
         <div className="slide-scroll-container" style={{ marginTop: '16px' }}>
           <table className="comparison-table" style={{ fontSize: '0.6em' }}>
@@ -32,7 +32,7 @@ export default function Slide19HardwareReq() {
       </section>
 
       {/* Sub-slide B: Production Environment */}
-      <section data-transition="slide" className="slide-dense-content">
+      <section data-auto-animate data-transition="slide" className="slide-dense-content">
         <h2 style={{ fontSize: '1.05em' }}>Hardware Requirements — Production (Hyperledger Fabric)</h2>
         <div className="slide-scroll-container" style={{ marginTop: '12px' }}>
           <table className="comparison-table" style={{ fontSize: '0.55em' }}>

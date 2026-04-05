@@ -34,7 +34,7 @@ const modules = [
 
 export default function Slide22ModulesFoundation() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>Modules 1–3: Cryptographic and Blockchain Foundation</h2>
       <div style={{ display: 'flex', gap: '14px', marginTop: '16px' }}>
         {modules.map((m) => (

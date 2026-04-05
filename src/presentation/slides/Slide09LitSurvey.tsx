@@ -12,7 +12,7 @@ export default function Slide09LitSurvey() {
   return (
     <section>
       {/* Sub-slide A: Section opener */}
-      <section data-transition="fade">
+      <section data-auto-animate data-transition="fade">
         <div className="section-number" style={{ fontSize: '12em', color: 'rgba(0,212,255,0.03)' }}>LS</div>
         <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '80%' }}>
           <h3 style={{ fontSize: '0.85em', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '40px', color: '#00d4ff' }}>
@@ -36,7 +36,7 @@ export default function Slide09LitSurvey() {
       </section>
 
       {/* Sub-slide B: Reference table */}
-      <section data-transition="fade" className="slide-dense-content">
+      <section data-auto-animate data-transition="fade" className="slide-dense-content">
         <h2 style={{ fontSize: '1.2em' }}>Key Literature and Standards Referenced</h2>
         <div className="slide-scroll-container" style={{ marginTop: '16px' }}>
           <table className="comparison-table" style={{ fontSize: '0.62em' }}>
@@ -66,7 +66,7 @@ export default function Slide09LitSurvey() {
       </section>
 
       {/* Sub-slide C: Critical analysis */}
-      <section data-transition="fade">
+      <section data-auto-animate data-transition="fade">
         <h2 style={{ fontSize: '1.2em' }}>Critical Analysis — Gaps in Prior Work</h2>
         <div className="grid-3" style={{ marginTop: '24px', gap: '20px' }}>
           <div className="pres-card" style={{ padding: '20px' }}>

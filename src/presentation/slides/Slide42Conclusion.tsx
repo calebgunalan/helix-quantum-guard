@@ -1,6 +1,6 @@
 export default function Slide42Conclusion() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Conclusion</h2>
       <div className="pres-card pres-card-teal" style={{ marginTop: '20px', padding: '20px 24px', borderLeft: '4px solid rgba(0,212,255,0.4)' }}>
         <p style={{ fontSize: '0.62em', color: '#cbd5e1', lineHeight: 1.8, marginBottom: '14px' }}>

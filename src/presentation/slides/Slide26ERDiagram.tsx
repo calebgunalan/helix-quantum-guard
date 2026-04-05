@@ -34,7 +34,7 @@ const rels: [number, number, number, number][] = [
 
 export default function Slide26ERDiagram() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>ER Diagram — Data Entities and Relationships</h2>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '8px' }}>
         <svg viewBox="0 0 760 500" style={{ width: '95%', maxHeight: '68vh' }}>
