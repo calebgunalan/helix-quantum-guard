@@ -1,15 +1,17 @@
+import ScrambleText from '../components/ScrambleText';
+
 export default function Slide14DID() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Every Identity Lives on the Blockchain</h2>
       <div style={{ display: 'flex', gap: '36px', marginTop: '24px' }}>
         {/* DID Card */}
-        <div className="did-card" style={{ flex: '0 0 45%' }}>
+        <div className="did-card pres-card-interactive" data-id="did-identity-card" style={{ flex: '0 0 45%' }}>
           <p style={{ color: '#64748b', marginBottom: '4px', fontFamily: 'Inter, sans-serif', fontSize: '0.9em' }}>DID Document</p>
-          <p><span style={{ color: '#64748b' }}>DID:</span> <span style={{ color: '#00d4ff' }}>did:helix:0x4a3f9c2d8b1e...</span></p>
+          <p><span style={{ color: '#64748b' }}>DID:</span> <ScrambleText text="did:helix:0x4a3f9c2d8b1e..." /></p>
           <p><span style={{ color: '#64748b' }}>Public Key:</span> <span style={{ color: '#cbd5e1' }}>[Dilithium3 — 1,952 bytes]</span></p>
           <p><span style={{ color: '#64748b' }}>Issued Block:</span> <span style={{ color: '#cbd5e1' }}>#12,441</span></p>
-          <p><span style={{ color: '#64748b' }}>Credential Hash:</span> <span style={{ color: '#cbd5e1' }}>SHA3-256: 0x7c2f9a4d...</span></p>
+          <p><span style={{ color: '#64748b' }}>Credential Hash:</span> <ScrambleText text="SHA3-256: 0x7c2f9a4d..." /></p>
           <p><span style={{ color: '#64748b' }}>Status:</span> <span style={{ color: '#16a34a' }}>● ACTIVE</span></p>
         </div>
 

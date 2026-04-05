@@ -1,6 +1,6 @@
 export default function Slide12Architecture() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Architecture at a Glance</h2>
 
       <svg viewBox="0 0 900 420" style={{ width: '100%', maxHeight: '420px', marginTop: '16px' }}>
@@ -31,11 +31,11 @@ export default function Slide12Architecture() {
         <g className="fragment" data-fragment-index="1">
           <text x="450" y="115" textAnchor="middle" fill="#00d4ff" fontSize="11" fontWeight="600" letterSpacing="2">SECURITY LAYER</text>
           {[
-            { x: 170, label: 'Kyber768 Auth', sub: 'Key Encapsulation' },
-            { x: 450, label: 'Dilithium Verification', sub: 'Identity Proof' },
-            { x: 730, label: 'Smart Contract RBAC', sub: 'Policy Evaluation' },
+            { x: 170, label: 'Kyber768 Auth', sub: 'Key Encapsulation', dataId: 'arch-node-kyber' },
+            { x: 450, label: 'Dilithium Verification', sub: 'Identity Proof', dataId: 'arch-node-dilithium' },
+            { x: 730, label: 'Smart Contract RBAC', sub: 'Policy Evaluation', dataId: 'arch-node-rbac' },
           ].map((n) => (
-            <g key={n.label}>
+            <g key={n.label} data-id={n.dataId}>
               <rect x={n.x - 100} y="128" width="200" height="50" rx="8" fill="rgba(0,212,255,0.12)" stroke="#00d4ff" strokeWidth="1" />
               <text x={n.x} y="150" textAnchor="middle" fill="#e2e8f0" fontSize="11" fontWeight="600">{n.label}</text>
               <text x={n.x} y="168" textAnchor="middle" fill="#64748b" fontSize="9">{n.sub}</text>
@@ -50,7 +50,7 @@ export default function Slide12Architecture() {
         <g className="fragment" data-fragment-index="2">
           <line x1="450" y1="180" x2="450" y2="230" stroke="#00d4ff" strokeWidth="0.8" strokeDasharray="4,3" opacity="0.4" />
           <text x="450" y="240" textAnchor="middle" fill="#64748b" fontSize="11" fontWeight="600" letterSpacing="2">INFRASTRUCTURE LAYER</text>
-          <rect x="180" y="252" width="280" height="50" rx="8" fill="rgba(124,58,237,0.08)" stroke="rgba(124,58,237,0.3)" strokeWidth="1" />
+          <rect x="180" y="252" width="280" height="50" rx="8" fill="rgba(124,58,237,0.08)" stroke="rgba(124,58,237,0.3)" strokeWidth="1" data-id="arch-node-blockchain" />
           <text x="320" y="274" textAnchor="middle" fill="#e2e8f0" fontSize="11" fontWeight="600">Permissioned Blockchain Ledger</text>
           <text x="320" y="292" textAnchor="middle" fill="#64748b" fontSize="9">Hyperledger Fabric / In-Browser Engine</text>
 
