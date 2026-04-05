@@ -1,0 +1,190 @@
+/* Cursor spotlight */
+.reveal::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    600px circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
+    rgba(0, 212, 255, 0.04),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Fragment animation override — rise + fade */
+.reveal .slides section .fragment {
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.4s ease !important;
+  transform: translateY(16px);
+  filter: blur(2px);
+}
+
+.reveal .slides section .fragment.visible {
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Previous fragments dim when new one appears */
+.reveal .slides section .fragment.visible ~ .fragment.visible {
+  /* keep full */
+}
+
+/* TiltCard shine layer */
+.tilt-card-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tilt-card-wrap:hover .tilt-card-shine {
+  opacity: 1;
+}
+
+/* Card hover glow */
+.pres-card-interactive {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.pres-card-interactive:hover {
+  box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.3), 0 0 20px rgba(0, 212, 255, 0.15);
+}
+
+/* Table row hover */
+.pres-table-row {
+  position: relative;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.pres-table-row:hover {
+  background-color: rgba(0, 212, 255, 0.06);
+  transform: scale(1.01);
+}
+.pres-table-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #00d4ff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.pres-table-row:hover::before {
+  transform: scaleX(1);
+}
+
+/* Animated gradient border for publications */
+@keyframes gradient-border-spin {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.gradient-border-card {
+  position: relative;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 12px;
+  z-index: 0;
+}
+.gradient-border-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background: conic-gradient(from var(--angle, 0deg), #00d4ff, #7c3aed, #00d4ff);
+  z-index: -1;
+  animation: gradient-border-spin 3s linear infinite;
+}
+
+/* Pulse badge */
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.badge-pulse {
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+/* SVG path draw animation */
+@keyframes draw-path {
+  to { stroke-dashoffset: 0; }
+}
+.draw-path {
+  animation: draw-path 0.6s ease-out forwards;
+}
+
+/* Binary rain (ambient) */
+@keyframes binary-fall {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 0.02; }
+  90% { opacity: 0.02; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+.binary-stream span {
+  animation: binary-fall linear infinite;
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #00d4ff;
+  opacity: 0;
+}
+
+/* Grid pulse (ambient) */
+@keyframes grid-dot-pulse {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.15; }
+}
+
+/* Breathing for section numbers */
+@keyframes section-breathe {
+  0%, 100% { transform: translate(-50%, -55%) scale(1) rotate(0deg); }
+  50% { transform: translate(-50%, -55%) scale(1.03) rotate(1deg); }
+}
+.section-num-breathe {
+  animation: section-breathe 4s ease-in-out infinite;
+}
+
+/* Number counter flip */
+@keyframes flip-up-out {
+  from { transform: perspective(200px) rotateX(0deg); opacity: 1; }
+  to { transform: perspective(200px) rotateX(-90deg); opacity: 0; }
+}
+@keyframes flip-up-in {
+  from { transform: perspective(200px) rotateX(90deg); opacity: 0; }
+  to { transform: perspective(200px) rotateX(0deg); opacity: 1; }
+}
+
+/* Performance - promote animated elements */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal::after,
+  .tilt-card-shine,
+  .binary-stream span,
+  .section-num-breathe,
+  .gradient-border-card::before,
+  .badge-pulse,
+  .draw-path {
+    animation: none !important;
+    transition: opacity 0.2s ease !important;
+  }
+  .reveal .slides section .fragment {
+    transform: none !important;
+    filter: none !important;
+    transition: opacity 0.2s ease !important;
+  }
+}

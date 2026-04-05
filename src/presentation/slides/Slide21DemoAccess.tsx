@@ -1,6 +1,6 @@
 export default function Slide21DemoAccess() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Demo: Smart Contract Access Enforcement</h2>
       <div className="grid-3" style={{ marginTop: '24px', gap: '20px' }}>
         <div className="fragment pres-card" style={{ padding: '20px', borderTop: '3px solid #00d4ff' }}>

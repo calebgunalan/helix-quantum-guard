@@ -1,6 +1,6 @@
 export default function Slide23DemoEmergency() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Demo: Break-Glass with Full Accountability</h2>
       <div style={{ display: 'flex', gap: '32px', marginTop: '24px' }}>
         {/* Problem */}

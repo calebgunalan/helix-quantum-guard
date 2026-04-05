@@ -1,6 +1,6 @@
 export default function Slide25RealVsSimulated() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Technical Transparency — What Is Real</h2>
       <div className="grid-2" style={{ marginTop: '28px', gap: '24px' }}>
         <div className="pres-card pres-card-teal" style={{ padding: '24px' }}>

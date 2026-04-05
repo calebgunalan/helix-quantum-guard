@@ -1,6 +1,6 @@
 export default function Slide26QuantumTimeline() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Why This Had to Be Built Now</h2>
 
       {/* Timeline */}

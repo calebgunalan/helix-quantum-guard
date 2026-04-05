@@ -28,7 +28,7 @@ const modules = [
 
 export default function Slide23ModulesIdentity() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>Modules 4–8: Identity, Session, and Interface</h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginTop: '14px' }}>
         {modules.slice(0, 3).map((m) => (

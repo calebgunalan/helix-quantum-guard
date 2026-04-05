@@ -2,7 +2,7 @@ export default function Slide24Implementation() {
   return (
     <section>
       {/* Sub-slide A: Codebase */}
-      <section data-transition="fade" className="slide-dense-content">
+      <section data-auto-animate data-transition="fade" className="slide-dense-content">
         <h2>How the System Was Built</h2>
         <div style={{ display: 'flex', gap: '28px', marginTop: '20px' }}>
           <div style={{ flex: '0 0 48%' }}>
@@ -58,7 +58,7 @@ export default function Slide24Implementation() {
       </section>
 
       {/* Sub-slide B: Decisions */}
-      <section data-transition="fade">
+      <section data-auto-animate data-transition="fade">
         <h2>Critical Engineering Decisions</h2>
         <div className="grid-2" style={{ marginTop: '20px', gap: '16px' }}>
           {[

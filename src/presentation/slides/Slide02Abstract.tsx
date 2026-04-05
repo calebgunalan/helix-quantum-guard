@@ -1,6 +1,6 @@
 export default function Slide02Abstract() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Abstract</h2>
       <div style={{ display: 'flex', gap: '32px', marginTop: '24px' }}>
         {/* Main abstract card */}

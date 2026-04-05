@@ -8,7 +8,7 @@ const rows = [
 
 export default function Slide07TraditionalGap() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>What Traditional IAM Gets Wrong</h2>
       <table className="comparison-table" style={{ marginTop: '28px' }}>
         <thead>

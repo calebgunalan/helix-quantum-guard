@@ -2,7 +2,7 @@ export default function Slide38PerformanceMetrics() {
   return (
     <section>
       {/* Sub-slide A: Benchmarks */}
-      <section data-transition="slide" className="slide-dense-content">
+      <section data-auto-animate data-transition="slide" className="slide-dense-content">
         <h2 style={{ fontSize: '1em' }}>Cryptographic Operation Performance</h2>
         <div style={{ marginTop: '12px' }}>
           {[
@@ -35,7 +35,7 @@ export default function Slide38PerformanceMetrics() {
       </section>
 
       {/* Sub-slide B: Security Properties */}
-      <section data-transition="slide" className="slide-dense-content">
+      <section data-auto-animate data-transition="slide" className="slide-dense-content">
         <h2 style={{ fontSize: '1em' }}>Security Analysis — What HelixID Guarantees</h2>
         <div className="slide-scroll-container" style={{ marginTop: '12px' }}>
           <table className="comparison-table" style={{ fontSize: '0.55em' }}>

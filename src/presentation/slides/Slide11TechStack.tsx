@@ -45,7 +45,7 @@ const layers = [
 
 export default function Slide11TechStack() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>Technology Stack</h2>
       <div style={{ display: 'flex', gap: '24px', marginTop: '20px' }}>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column-reverse', gap: '12px' }}>

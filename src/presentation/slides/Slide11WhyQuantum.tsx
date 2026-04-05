@@ -1,6 +1,6 @@
 export default function Slide11WhyQuantum() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2 style={{ fontSize: '1.15em' }}>Why Quantum Resistance — And Why Now</h2>
       <div style={{ display: 'flex', gap: '28px', marginTop: '20px' }}>
         {/* Left: Stakes */}

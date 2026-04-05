@@ -50,7 +50,7 @@ function ClassBox({ c }: { c: typeof classes[number] }) {
 
 export default function Slide28ClassDiagram() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>UML Class Diagram — Core System Classes</h2>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '8px' }}>
         <svg viewBox="0 0 820 460" style={{ width: '98%', maxHeight: '68vh' }}>

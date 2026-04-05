@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Reveal from 'reveal.js';
 import '../presentation/theme.css';
+import '../presentation/animations.css';
 import { TOTAL_SLIDES, HELIX_ID_DEMO_URL } from '../presentation/constants';
+
+// System Internals Monitor
+import SystemInternalsMonitor from '../presentation/components/SystemInternalsMonitor';
 
 // Section Divider
 import SectionDivider from '../presentation/slides/SectionDivider';
@@ -82,6 +86,16 @@ export default function Presentation() {
   const [showDemoBtn, setShowDemoBtn] = useState(false);
 
   useEffect(() => {
+    // Cursor spotlight tracker
+    const handleMouse = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
+      document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
+    };
+    document.addEventListener('mousemove', handleMouse);
+    return () => document.removeEventListener('mousemove', handleMouse);
+  }, []);
+
+  useEffect(() => {
     if (!deckRef.current || revealRef.current) return;
 
     const deck = new (Reveal as any)(deckRef.current, {
@@ -102,6 +116,17 @@ export default function Presentation() {
       embedded: false,
       fragments: true,
       overview: true,
+      // Auto-Animate (Morph transitions)
+      autoAnimate: true,
+      autoAnimateDuration: 0.9,
+      autoAnimateEasing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      autoAnimateUnmatched: true,
+      autoAnimateStyles: [
+        'opacity', 'color', 'background-color',
+        'padding', 'font-size', 'line-height',
+        'letter-spacing', 'border-width', 'border-color',
+        'border-radius', 'outline', 'outline-offset',
+      ],
     });
 
     deck.initialize().then(() => {
@@ -151,7 +176,10 @@ export default function Presentation() {
       </div>
 
       {/* HelixID wordmark */}
-      <div className="helix-wordmark">HelixID</div>
+      <div className="helix-wordmark" data-id="helix-wordmark">HelixID</div>
+
+      {/* System Internals Monitor */}
+      <SystemInternalsMonitor />
 
       {/* Jump to Demo button */}
       {showDemoBtn && (

@@ -7,7 +7,7 @@ const lanes = [
 
 export default function Slide30ActivityDiagram() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '0.95em' }}>UML Activity Diagram — Access Request Workflow</h2>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '6px' }}>
         <svg viewBox="0 0 740 480" style={{ width: '98%', maxHeight: '70vh' }}>

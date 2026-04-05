@@ -1,6 +1,8 @@
+import ScrambleText from '../components/ScrambleText';
+
 export default function Slide15Blockchain() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>An Audit Trail That Cannot Lie</h2>
 
       {/* Block chain visualization */}
@@ -11,10 +13,10 @@ export default function Slide15Blockchain() {
           { num: '14,843', hash: '0x7b1e...', prev: '0x4c2d...', txs: ['POLICY_UPDATED', 'ACCESS_DENIED', 'CREDENTIAL_ISSUED', 'IDENTITY_REGISTERED'] },
         ].map((block, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div className="block-card" style={{ minWidth: '220px' }}>
+            <div className="block-card pres-card-interactive" data-id={`block-${block.num.replace(/,/g, '')}`} style={{ minWidth: '220px' }}>
               <p style={{ color: '#00d4ff', fontWeight: 700, marginBottom: '6px' }}>Block #{block.num}</p>
-              <p className="mono" style={{ fontSize: '0.85em' }}>Hash: {block.hash}</p>
-              <p className="mono" style={{ fontSize: '0.85em', color: '#64748b' }}>Prev: {block.prev}</p>
+              <p style={{ fontSize: '0.85em' }}>Hash: <ScrambleText text={block.hash} /></p>
+              <p style={{ fontSize: '0.85em' }}>Prev: <ScrambleText text={block.prev} style={{ color: '#64748b' }} /></p>
               <p style={{ color: '#94a3b8', marginTop: '6px', fontSize: '0.85em' }}>TX: {block.txs.length} events</p>
               {block.txs.map((tx) => (
                 <span key={tx} style={{ display: 'inline-block', fontSize: '0.7em', color: '#cbd5e1', background: 'rgba(0,212,255,0.06)', padding: '2px 6px', borderRadius: '3px', margin: '2px 3px 2px 0' }}>
@@ -23,7 +25,12 @@ export default function Slide15Blockchain() {
               ))}
             </div>
             {i < 2 && (
-              <svg width="40" height="20"><line x1="0" y1="10" x2="32" y2="10" stroke="#00d4ff" strokeWidth="1.5" /><polygon points="32,5 40,10 32,15" fill="#00d4ff" /></svg>
+              <svg width="40" height="20">
+                <line x1="0" y1="10" x2="32" y2="10" stroke="#00d4ff" strokeWidth="1.5" strokeDasharray="4,2">
+                  <animate attributeName="stroke-dashoffset" values="6;0" dur="1s" repeatCount="indefinite" />
+                </line>
+                <polygon points="32,5 40,10 32,15" fill="#00d4ff" />
+              </svg>
             )}
           </div>
         ))}

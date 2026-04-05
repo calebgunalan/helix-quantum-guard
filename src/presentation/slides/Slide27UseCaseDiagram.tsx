@@ -25,7 +25,7 @@ const shared = [
 
 export default function Slide27UseCaseDiagram() {
   return (
-    <section data-transition="slide" className="slide-dense-content">
+    <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>UML Use Case Diagram</h2>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '8px' }}>
         <svg viewBox="0 0 720 420" style={{ width: '95%', maxHeight: '68vh' }}>

@@ -1,6 +1,6 @@
 export default function Slide45Publications() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2 style={{ fontSize: '1.05em' }}>Publications</h2>
 
       {/* Primary publication */}

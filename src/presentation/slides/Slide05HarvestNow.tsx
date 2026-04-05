@@ -1,6 +1,6 @@
 export default function Slide05HarvestNow() {
   return (
-    <section data-transition="slide">
+    <section data-auto-animate data-transition="slide">
       <h2>The Attack That Is Already Happening</h2>
 
       {/* Timeline visualization */}
