@@ -1,3 +1,5 @@
+import TiltCard from '../components/TiltCard';
+
 const quadrants = [
   {
     title: '🔐 Cryptographic Libraries',
@@ -44,25 +46,24 @@ const quadrants = [
 export default function Slide20SoftwareReq() {
   return (
     <section data-auto-animate data-transition="slide" className="slide-dense-content">
-      <h2 style={{ fontSize: '1.05em' }}>Software Requirements</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '14px' }}>
+      <h2 style={{ fontSize: '1em', marginBottom: 'clamp(0.3rem, 0.6vh, 0.6rem)' }}>Software Requirements</h2>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: 'clamp(0.4rem, 0.8vh, 0.8rem)', flex: 1, minHeight: 0 }}>
         {quadrants.map((q) => (
-          <div key={q.title} className="pres-card" style={{ padding: '14px', borderTop: `2px solid ${q.color}` }}>
-            <h4 style={{ fontSize: '0.65em', color: q.color, marginBottom: '8px', fontWeight: 600 }}>{q.title}</h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              {q.items.map((it) => (
-                <div key={it.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: '0.52em' }}>
-                  <span style={{ color: '#cbd5e1', fontWeight: 500 }}>{it.name} <span style={{ color: '#64748b' }}>{it.ver}</span></span>
-                  <span style={{ color: '#64748b', fontSize: '0.9em', textAlign: 'right', maxWidth: '55%' }}>{it.purpose}</span>
-                </div>
-              ))}
+          <TiltCard key={q.title} maxTilt={6}>
+            <div className="pres-card" style={{ padding: 'clamp(0.5rem, 1vh, 1rem)', borderTop: `2px solid ${q.color}`, height: '100%', overflow: 'hidden' }}>
+              <h4 style={{ fontSize: 'clamp(0.6rem, 1.2vw, 0.9rem)', color: q.color, marginBottom: 'clamp(0.2rem, 0.4vh, 0.5rem)', fontWeight: 700 }}>{q.title}</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                {q.items.map((it) => (
+                  <div key={it.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: 'clamp(0.42rem, 0.85vw, 0.65rem)' }}>
+                    <span style={{ color: '#cbd5e1', fontWeight: 500 }}>{it.name} <span style={{ color: '#64748b' }}>{it.ver}</span></span>
+                    <span style={{ color: '#64748b', fontSize: '0.9em', textAlign: 'right', maxWidth: '55%' }}>{it.purpose}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </TiltCard>
         ))}
       </div>
-      <p style={{ fontSize: '0.5em', color: '#64748b', marginTop: '10px', fontStyle: 'italic' }}>
-        All cryptographic libraries are open-source with active security audits. noble-post-quantum and @noble/hashes are maintained by Paul Miller with multiple independent audits.
-      </p>
       <aside className="notes">Four-quadrant software overview covering crypto, frontend, blockchain infra, and dev tools.</aside>
     </section>
   );

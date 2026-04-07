@@ -1,3 +1,5 @@
+import TiltCard from '../components/TiltCard';
+
 const objectives = [
   { num: '01', title: 'Quantum-Resistant Authentication', desc: 'Design and implement an authentication protocol using CRYSTALS-Kyber768 key encapsulation and Dilithium3 challenge-response that remains secure against both classical and quantum adversaries.' },
   { num: '02', title: 'Immutable Identity Audit Trail', desc: 'Build a blockchain-based ledger where every identity event is recorded as a cryptographically signed, SHA3-256 hashed transaction that is verifiable and tamper-evident by any network participant.' },
@@ -13,22 +15,20 @@ export default function Slide03Objectives() {
       <h2>Project Objectives</h2>
       <div className="grid-2" style={{ marginTop: '20px' }}>
         {objectives.map((obj) => (
-          <div key={obj.num} className="fragment pres-card" style={{ padding: '20px', display: 'flex', gap: '16px' }}>
-            <span style={{ fontSize: '1.8em', fontWeight: 900, color: 'rgba(0,212,255,0.15)', lineHeight: 1, flexShrink: 0 }}>
-              {obj.num}
-            </span>
-            <div>
-              <h4 style={{ fontSize: '0.85em', color: '#00d4ff', marginBottom: '6px', fontWeight: 600 }}>{obj.title}</h4>
-              <p style={{ fontSize: '0.68em', color: '#94a3b8', lineHeight: 1.6, marginBottom: 0 }}>{obj.desc}</p>
+          <TiltCard key={obj.num} className="fragment" maxTilt={8}>
+            <div className="pres-card" style={{ padding: '20px', display: 'flex', gap: '16px' }}>
+              <span style={{ fontSize: '1.8em', fontWeight: 900, color: 'rgba(0,212,255,0.15)', lineHeight: 1, flexShrink: 0 }}>
+                {obj.num}
+              </span>
+              <div>
+                <h4 style={{ fontSize: '0.85em', color: '#00d4ff', marginBottom: '6px', fontWeight: 600 }}>{obj.title}</h4>
+                <p style={{ fontSize: '0.68em', color: '#94a3b8', lineHeight: 1.6, marginBottom: 0 }}>{obj.desc}</p>
+              </div>
             </div>
-          </div>
+          </TiltCard>
         ))}
       </div>
-
-      <aside className="notes">
-        These six objectives map directly to the six architectural components of HelixID.
-        Each one addresses a specific failure mode of traditional IAM. Walk through them one at a time.
-      </aside>
+      <aside className="notes">These six objectives map directly to the six architectural components of HelixID.</aside>
     </section>
   );
 }

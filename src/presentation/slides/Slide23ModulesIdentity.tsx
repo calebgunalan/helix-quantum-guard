@@ -1,3 +1,5 @@
+import TiltCard from '../components/TiltCard';
+
 const modules = [
   {
     num: 4, name: 'DID Management', file: 'did.ts', color: '#00d4ff',
@@ -30,15 +32,21 @@ export default function Slide23ModulesIdentity() {
   return (
     <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>Modules 4–8: Identity, Session, and Interface</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginTop: '14px' }}>
-        {modules.slice(0, 3).map((m) => (
-          <ModuleCard key={m.num} m={m} />
-        ))}
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '10px' }}>
-        {modules.slice(3).map((m) => (
-          <ModuleCard key={m.num} m={m} />
-        ))}
+      <div className="slide-scroll-inner">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginTop: '14px' }}>
+          {modules.slice(0, 3).map((m) => (
+            <TiltCard key={m.num} className="fragment" maxTilt={6}>
+              <ModuleCard m={m} />
+            </TiltCard>
+          ))}
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '10px' }}>
+          {modules.slice(3).map((m) => (
+            <TiltCard key={m.num} className="fragment" maxTilt={6}>
+              <ModuleCard m={m} />
+            </TiltCard>
+          ))}
+        </div>
       </div>
       <aside className="notes">Five modules covering identity management, authentication, and all four actor dashboards.</aside>
     </section>
@@ -47,7 +55,7 @@ export default function Slide23ModulesIdentity() {
 
 function ModuleCard({ m }: { m: typeof modules[number] }) {
   return (
-    <div className="fragment pres-card" style={{ padding: '12px', borderLeft: `3px solid ${m.color}` }}>
+    <div className="pres-card" style={{ padding: '12px', borderLeft: `3px solid ${m.color}`, height: '100%' }}>
       <span style={{ fontSize: '0.5em', color: m.color, fontWeight: 700 }}>Module {m.num} — {m.name}</span>
       <p className="mono" style={{ fontSize: '0.42em', color: '#64748b', margin: '2px 0 6px' }}>{m.file}</p>
       <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>

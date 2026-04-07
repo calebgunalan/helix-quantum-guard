@@ -107,6 +107,66 @@
   animation: gradient-border-spin 3s linear infinite;
 }
 
+/* Publication aura cards */
+.pub-aura-wrap {
+  position: relative;
+  border-radius: 12px;
+  padding: 2px;
+  background: conic-gradient(from var(--angle, 0deg), var(--aura-c1), var(--aura-c2), var(--aura-c1));
+  animation: gradient-border-spin 4s linear infinite;
+  cursor: pointer;
+  transition: padding 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.pub-aura-wrap:hover {
+  padding: 3px;
+  animation-duration: 2s;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+.pub-aura-wrap:hover .pub-click-hint { opacity: 1 !important; }
+
+.pub-card-inner {
+  background: rgba(15,23,42,0.95);
+  border-radius: 10px;
+  padding: 12px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pub-modal-panel {
+  position: relative;
+  width: 80vw;
+  max-width: 800px;
+  max-height: 85vh;
+  background: rgba(15,23,42,0.98);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.pub-modal-panel::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 18px;
+  background: conic-gradient(from var(--angle, 0deg), var(--aura-c1), var(--aura-c2), var(--aura-c1));
+  z-index: -1;
+  animation: gradient-border-spin 6s linear infinite;
+}
+
+/* Slide scroll inner for dense content */
+.slide-scroll-inner {
+  overflow-y: auto !important;
+  max-height: 80vh !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(0,212,255,0.4) transparent !important;
+  padding-right: 0.5rem !important;
+  flex: 1;
+  min-height: 0;
+}
+
 /* Pulse badge */
 @keyframes badge-pulse {
   0%, 100% { opacity: 1; }
