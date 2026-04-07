@@ -9,19 +9,27 @@ const DANGER = 'DC2626';
 const SUCCESS = '16A34A';
 const WARNING = 'F59E0B';
 const CARD_BG = '0F172A';
+const TOTAL = 45;
 
-type Slide = PptxGenJS.Slide;
+type S = PptxGenJS.Slide;
 
-function addSlideNumber(slide: Slide, num: number) {
-  slide.addText(`${num} / 30`, { x: 8.5, y: 6.8, w: 1.2, h: 0.3, fontSize: 8, color: MUTED, align: 'right', fontFace: 'Courier New' });
+function sn(s: S, n: number) {
+  s.addText(`${n} / ${TOTAL}`, { x: 8.5, y: 6.8, w: 1.2, h: 0.3, fontSize: 8, color: MUTED, align: 'right', fontFace: 'Courier New' });
 }
 
-function addHeading(slide: Slide, text: string, opts?: Partial<PptxGenJS.TextPropsOptions>) {
-  slide.addText(text, { x: 0.5, y: 0.3, w: 9, h: 0.6, fontSize: 24, color: TEXT, bold: true, fontFace: 'Arial', ...opts });
+function h(s: S, text: string) {
+  s.addText(text, { x: 0.5, y: 0.3, w: 9, h: 0.6, fontSize: 24, color: TEXT, bold: true, fontFace: 'Arial' });
 }
 
-function addCard(slide: Slide, x: number, y: number, w: number, h: number, borderColor = TEAL) {
-  slide.addShape('rect' as any, { x, y, w, h, fill: { color: CARD_BG }, line: { color: borderColor, width: 1 }, rectRadius: 0.1 });
+function card(s: S, x: number, y: number, w: number, ht: number, bc = TEAL) {
+  s.addShape('rect' as any, { x, y, w, h: ht, fill: { color: CARD_BG }, line: { color: bc, width: 1 }, rectRadius: 0.1 });
+}
+
+function divider(s: S, num: string, title: string, sub: string) {
+  s.background = { color: BG };
+  s.addText(num, { x: 5, y: 1.5, w: 4, h: 3.5, fontSize: 140, color: '0D1520', bold: true, fontFace: 'Arial', align: 'right' });
+  s.addText(title, { x: 0.8, y: 2.5, w: 7, h: 1, fontSize: 32, color: TEAL, bold: true, fontFace: 'Arial' });
+  s.addText(sub, { x: 0.8, y: 3.6, w: 7, h: 0.5, fontSize: 13, color: MUTED, fontFace: 'Arial' });
 }
 
 export async function exportToPptx() {
@@ -30,633 +38,161 @@ export async function exportToPptx() {
   pptx.author = 'Caleb Gunalan';
   pptx.title = 'HelixID — Blockchain-based Quantum-Resistant IAM';
 
-  // Slide 1: Title
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    s.addText('HelixID', { x: 1, y: 1.8, w: 8, h: 1.5, fontSize: 54, color: TEAL, bold: true, align: 'center', fontFace: 'Arial' });
-    s.addText('Blockchain-based Quantum-Resistant Identity and\nAccess Management for Healthcare', { x: 1.5, y: 3.3, w: 7, h: 0.8, fontSize: 16, color: MUTED, align: 'center', fontFace: 'Arial' });
-    s.addText('Caleb Gunalan · Department of Computer Science\n\nGuided by · Dr. P. Deepalakshmi', { x: 2, y: 4.8, w: 6, h: 0.8, fontSize: 11, color: '64748B', align: 'center', fontFace: 'Arial' });
-    s.addText('April 2026', { x: 2, y: 5.6, w: 6, h: 0.4, fontSize: 10, color: '64748B', align: 'center', fontFace: 'Arial' });
-    s.addText('Built with CRYSTALS-Dilithium3 · Kyber768 · SHA3-256', { x: 2, y: 6.2, w: 6, h: 0.3, fontSize: 9, color: TEAL, align: 'center', fontFace: 'Arial' });
-    addSlideNumber(s, 1);
-  }
+  let n = 0;
+  const add = () => { n++; const s = pptx.addSlide(); s.background = { color: BG }; return s; };
 
-  // Slide 2: Abstract
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Abstract');
-    addCard(s, 0.5, 1.1, 6, 5.2, TEAL);
-    s.addText('HelixID is a blockchain-based, quantum-resistant Identity and Access Management (IAM) system designed for multi-institutional healthcare environments. The system addresses two converging threats: the inadequacy of centralized identity infrastructure in high-stakes medical data environments, and the impending vulnerability of classical cryptographic algorithms to quantum computing attacks. HelixID implements NIST-standardized post-quantum cryptographic algorithms — CRYSTALS-Dilithium3 (FIPS 204) for digital signatures and CRYSTALS-Kyber768 (FIPS 203) for key encapsulation — within a permissioned blockchain architecture to deliver tamper-proof identity lifecycle management, smart contract-enforced role-based access control, decentralized identity (DID) anchoring, and a cryptographically immutable audit trail.', {
-      x: 0.7, y: 1.3, w: 5.6, h: 4.8, fontSize: 11, color: 'CBD5E1', fontFace: 'Arial', valign: 'top', lineSpacingMultiple: 1.5,
-    });
-    const keywords = ['Post-Quantum Cryptography', 'Decentralized Identity (W3C DID)', 'Permissioned Blockchain', 'Smart Contract RBAC'];
-    keywords.forEach((kw, i) => {
-      addCard(s, 6.8, 1.1 + i * 0.55, 2.8, 0.45, TEAL);
-      s.addText(kw, { x: 6.9, y: 1.15 + i * 0.55, w: 2.6, h: 0.4, fontSize: 9, color: TEAL, fontFace: 'Arial', align: 'center' });
-    });
-    addSlideNumber(s, 2);
-  }
+  // 1 — Section Divider: Opening
+  { const s = add(); divider(s, '01', 'Opening', 'Project introduction and research context'); sn(s, n); }
 
-  // Slide 3: Objectives
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Project Objectives');
-    const objs = [
-      ['01', 'Quantum-Resistant Authentication'],
-      ['02', 'Immutable Identity Audit Trail'],
-      ['03', 'Decentralized Identity Anchoring'],
-      ['04', 'Smart Contract Policy Enforcement'],
-      ['05', 'Privacy-Preserving Credential Verification'],
-      ['06', 'Complete IAM Feature Parity'],
-    ];
-    objs.forEach(([num, title], i) => {
-      const col = i % 2;
-      const row = Math.floor(i / 2);
-      const x = 0.5 + col * 4.7;
-      const y = 1.1 + row * 1.7;
-      addCard(s, x, y, 4.4, 1.5);
-      s.addText(num, { x: x + 0.15, y: y + 0.15, w: 0.5, h: 0.5, fontSize: 22, color: '1A3A5C', bold: true, fontFace: 'Arial' });
-      s.addText(title, { x: x + 0.7, y: y + 0.15, w: 3.5, h: 0.4, fontSize: 13, color: TEAL, bold: true, fontFace: 'Arial' });
-    });
-    addSlideNumber(s, 3);
-  }
+  // 2 — Title
+  { const s = add(); s.addText('HelixID', { x: 1, y: 1.8, w: 8, h: 1.5, fontSize: 54, color: TEAL, bold: true, align: 'center', fontFace: 'Arial' }); s.addText('Blockchain-based Quantum-Resistant Identity and\nAccess Management for Healthcare', { x: 1.5, y: 3.3, w: 7, h: 0.8, fontSize: 16, color: MUTED, align: 'center', fontFace: 'Arial' }); s.addText('Caleb Gunalan · Department of Computer Science\n\nGuided by · Dr. P. Deepalakshmi', { x: 2, y: 4.8, w: 6, h: 0.8, fontSize: 11, color: '64748B', align: 'center', fontFace: 'Arial' }); s.addText('April 2026', { x: 2, y: 5.6, w: 6, h: 0.4, fontSize: 10, color: '64748B', align: 'center', fontFace: 'Arial' }); sn(s, n); }
 
-  // Slide 4: Stakes
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    s.addText('01', { x: 7, y: 1, w: 2.5, h: 3, fontSize: 120, color: '0D1520', bold: true, fontFace: 'Arial' });
-    s.addText('The Threat Landscape', { x: 0.5, y: 0.5, w: 6, h: 0.5, fontSize: 14, color: MUTED, fontFace: 'Arial', italic: true });
-    s.addText('"By 2031, RSA-2048 encryption — protecting 90% of today\'s digital infrastructure — will be breakable by quantum computers."', {
-      x: 0.5, y: 1.5, w: 7, h: 1.2, fontSize: 20, color: TEAL, bold: true, fontFace: 'Arial', lineSpacingMultiple: 1.3,
-    });
-    s.addText('— NIST Post-Quantum Cryptography Project, 2024', { x: 0.5, y: 2.8, w: 5, h: 0.3, fontSize: 9, color: MUTED, italic: true, fontFace: 'Arial' });
-    addSlideNumber(s, 4);
-  }
+  // 3 — Abstract
+  { const s = add(); h(s, 'Abstract'); card(s, 0.5, 1.1, 6, 5.2, TEAL); s.addText('HelixID is a blockchain-based, quantum-resistant Identity and Access Management (IAM) system designed for multi-institutional healthcare environments. The system addresses two converging threats: the inadequacy of centralized identity infrastructure in high-stakes medical data environments, and the impending vulnerability of classical cryptographic algorithms to quantum computing attacks. HelixID implements NIST-standardized post-quantum cryptographic algorithms — CRYSTALS-Dilithium3 (FIPS 204) for digital signatures and CRYSTALS-Kyber768 (FIPS 203) for key encapsulation — within a permissioned blockchain architecture.', { x: 0.7, y: 1.3, w: 5.6, h: 4.8, fontSize: 11, color: 'CBD5E1', fontFace: 'Arial', valign: 'top', lineSpacingMultiple: 1.5 }); ['Post-Quantum Cryptography', 'Decentralized Identity (W3C DID)', 'Permissioned Blockchain', 'Smart Contract RBAC'].forEach((kw, i) => { card(s, 6.8, 1.1 + i * 0.55, 2.8, 0.45, TEAL); s.addText(kw, { x: 6.9, y: 1.15 + i * 0.55, w: 2.6, h: 0.4, fontSize: 9, color: TEAL, fontFace: 'Arial', align: 'center' }); }); sn(s, n); }
 
-  // Slide 5: Harvest Now
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'The Attack That Is Already Happening');
-    s.addShape('rect' as any, { x: 0.5, y: 1.5, w: 9, h: 0.05, fill: { color: TEAL } });
-    s.addText('TODAY — 2026', { x: 0.5, y: 1.8, w: 3, h: 0.4, fontSize: 11, color: TEAL, bold: true, fontFace: 'Arial' });
-    s.addText('← The "Harvest Now, Decrypt Later" Window →', { x: 3.5, y: 1.8, w: 3.5, h: 0.4, fontSize: 10, color: WARNING, bold: true, align: 'center', fontFace: 'Arial' });
-    s.addText('2031+', { x: 7.5, y: 1.8, w: 2, h: 0.4, fontSize: 11, color: DANGER, bold: true, align: 'right', fontFace: 'Arial' });
-    addCard(s, 0.5, 3.5, 9, 1.5, DANGER);
-    s.addText('Patient medical records are legally retained for 50+ years. A record encrypted with RSA today is readable to a quantum-equipped adversary before that retention period ends. This is not a future problem. It is a present vulnerability.', {
-      x: 0.7, y: 3.6, w: 8.6, h: 1.3, fontSize: 12, color: TEXT, fontFace: 'Arial', lineSpacingMultiple: 1.4,
-    });
-    addSlideNumber(s, 5);
-  }
+  // 4 — Section Divider: Problem Statement
+  { const s = add(); divider(s, '02', 'Problem Statement', 'The dual threat facing healthcare identity systems'); sn(s, n); }
 
-  // Slide 6: Why Healthcare
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Healthcare: The Highest-Stakes Target');
-    const cols = [
-      ['⏳', 'Longest Data Lifespan', 'Medical records retained 25–50 years.'],
-      ['🔒', 'Most Sensitive Data Category', 'Health data is legally the most protected class.'],
-      ['🔗', 'Fragmented Identity Infrastructure', 'A patient\'s identity lives in 12 different databases.'],
-    ];
-    cols.forEach(([icon, title, text], i) => {
-      const x = 0.5 + i * 3.1;
-      addCard(s, x, 1.2, 2.8, 3.5);
-      s.addText(icon, { x, y: 1.4, w: 2.8, h: 0.6, fontSize: 28, align: 'center', fontFace: 'Arial' });
-      s.addText(title, { x: x + 0.2, y: 2.1, w: 2.4, h: 0.5, fontSize: 12, color: TEAL, bold: true, align: 'center', fontFace: 'Arial' });
-      s.addText(text, { x: x + 0.2, y: 2.7, w: 2.4, h: 1.8, fontSize: 10, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.3 });
-    });
-    addSlideNumber(s, 6);
-  }
+  // 5 — Problem Statement
+  { const s = add(); h(s, 'Problem Statement'); const paras = ['1. Contemporary IAM systems rely on centralized identity directories and classical cryptographic primitives that are vulnerable to quantum attacks.', '2. Existing blockchain-based IAM proposals retain classical cryptographic schemes (ECDSA, SHA-256) that are quantum-vulnerable.', '3. No existing system integrates NIST-standardized post-quantum primitives within a permissioned blockchain IAM architecture for healthcare.']; paras.forEach((p, i) => { s.addText(p, { x: 0.5, y: 1.2 + i * 1.5, w: 9, h: 1.3, fontSize: 11, color: 'CBD5E1', fontFace: 'Arial', lineSpacingMultiple: 1.5, valign: 'top' }); }); card(s, 0.5, 5.8, 9, 0.7, TEAL); s.addText('HelixID solves all three problems within a single, unified framework.', { x: 0.7, y: 5.9, w: 8.6, h: 0.5, fontSize: 11, color: TEAL, bold: true, fontFace: 'Arial' }); sn(s, n); }
 
-  // Slide 7: Traditional Gap
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'What Traditional IAM Gets Wrong');
-    const rows = [
-      ['Centralized identity database', 'Decentralized Identity on blockchain'],
-      ['Classical RSA/ECC encryption', 'CRYSTALS-Dilithium3 + Kyber768'],
-      ['Database audit logs (mutable)', 'Immutable blockchain ledger'],
-      ['Access policies in config files', 'Smart contract policies on-chain'],
-      ['Credentials in central directory', 'Credentials as on-chain DID Documents'],
-    ];
-    s.addText('Traditional IAM', { x: 0.5, y: 1.1, w: 4, h: 0.4, fontSize: 13, color: DANGER, bold: true, fontFace: 'Arial' });
-    s.addText('What HelixID Does', { x: 5.5, y: 1.1, w: 4, h: 0.4, fontSize: 13, color: TEAL, bold: true, fontFace: 'Arial' });
-    rows.forEach(([old, helix], i) => {
-      const y = 1.6 + i * 0.9;
-      s.addText(old, { x: 0.5, y, w: 4, h: 0.7, fontSize: 10, color: MUTED, fontFace: 'Arial', valign: 'top' });
-      s.addText('→', { x: 4.6, y, w: 0.5, h: 0.7, fontSize: 14, color: TEAL, align: 'center', fontFace: 'Arial' });
-      s.addText(helix, { x: 5.3, y, w: 4.2, h: 0.7, fontSize: 10, color: 'CBD5E1', fontFace: 'Arial', valign: 'top' });
-    });
-    addSlideNumber(s, 7);
-  }
+  // 6 — Section Divider: Literature Review
+  { const s = add(); divider(s, '03', 'Literature Review', 'Research foundation across four intersecting domains'); sn(s, n); }
 
-  // Slide 8: Intro HelixID
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    s.addText('02', { x: 7, y: 1, w: 2.5, h: 3, fontSize: 120, color: '0D1520', bold: true, fontFace: 'Arial' });
-    s.addText('The Solution', { x: 0.5, y: 0.5, w: 6, h: 0.5, fontSize: 14, color: MUTED, fontFace: 'Arial' });
-    s.addText('HelixID', { x: 1, y: 2, w: 8, h: 1.2, fontSize: 48, color: TEAL, bold: true, align: 'center', fontFace: 'Arial' });
-    s.addText('Post-Quantum Cryptographic Identity Management —\nBuilt on Blockchain. Built for Healthcare. Built for the Future.', {
-      x: 1.5, y: 3.3, w: 7, h: 0.8, fontSize: 13, color: MUTED, align: 'center', fontFace: 'Arial', lineSpacingMultiple: 1.3,
-    });
-    addSlideNumber(s, 8);
-  }
+  // 7 — Literature Survey
+  { const s = add(); h(s, 'Literature Survey'); const refs = [['NIST FIPS 203 — Kyber768', '2024', 'Key encapsulation'], ['NIST FIPS 204 — Dilithium3', '2024', 'Digital signatures'], ['W3C DIDs v1.0', '2022', 'DID documents'], ['Hyperledger Fabric v2.5', '2023', 'Permissioned blockchain'], ['IEEE Access — Blockchain IAM Survey', '2018', 'IAM taxonomy'], ['Journal of Medical Systems — PQC', '2023', 'Healthcare crypto feasibility'], ['ENISA — HNDL Report', '2023', 'Threat model']]; refs.forEach(([ref, yr, c], i) => { const y = 1.2 + i * 0.72; s.addText(ref, { x: 0.5, y, w: 4, h: 0.6, fontSize: 9, color: 'CBD5E1', fontFace: 'Arial', valign: 'top' }); s.addText(yr, { x: 4.6, y, w: 0.6, h: 0.6, fontSize: 9, color: MUTED, fontFace: 'Arial' }); s.addText(c, { x: 5.3, y, w: 4.2, h: 0.6, fontSize: 9, color: MUTED, fontFace: 'Arial', valign: 'top' }); }); sn(s, n); }
 
-  // Slide 9: Literature Survey (section opener only for PPTX)
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Literature Survey — The Research Foundation');
-    const refs = [
-      ['NIST FIPS 203 — Kyber768 Standard', '2024', 'Key encapsulation for session establishment'],
-      ['NIST FIPS 204 — Dilithium3 Standard', '2024', 'Digital signatures for all transaction signing'],
-      ['W3C DIDs v1.0', '2022', 'DID document structure and resolution'],
-      ['Hyperledger Fabric v2.5', '2023', 'Permissioned blockchain model'],
-      ['IEEE Access — Blockchain IAM Survey', '2018', 'Taxonomy of blockchain IAM architectures'],
-      ['Journal of Medical Systems — PQC for Healthcare', '2023', 'Lattice-based crypto feasibility in healthcare'],
-      ['ENISA — Harvest Now, Decrypt Later', '2023', 'Threat model and timeline analysis'],
-    ];
-    refs.forEach(([ref, year, contrib], i) => {
-      const y = 1.2 + i * 0.72;
-      s.addText(ref, { x: 0.5, y, w: 4, h: 0.6, fontSize: 9, color: 'CBD5E1', fontFace: 'Arial', valign: 'top' });
-      s.addText(year, { x: 4.6, y, w: 0.6, h: 0.6, fontSize: 9, color: MUTED, fontFace: 'Arial' });
-      s.addText(contrib, { x: 5.3, y, w: 4.2, h: 0.6, fontSize: 9, color: MUTED, fontFace: 'Arial', valign: 'top' });
-    });
-    addSlideNumber(s, 9);
-  }
+  // 8 — Objectives
+  { const s = add(); h(s, 'Project Objectives'); const objs = [['01', 'Quantum-Resistant Authentication'], ['02', 'Immutable Identity Audit Trail'], ['03', 'Decentralized Identity Anchoring'], ['04', 'Smart Contract Policy Enforcement'], ['05', 'Privacy-Preserving Credential Verification'], ['06', 'Complete IAM Feature Parity']]; objs.forEach(([num, title], i) => { const col = i % 2; const row = Math.floor(i / 2); const x = 0.5 + col * 4.7; const y = 1.1 + row * 1.7; card(s, x, y, 4.4, 1.5); s.addText(num, { x: x + 0.15, y: y + 0.15, w: 0.5, h: 0.5, fontSize: 22, color: '1A3A5C', bold: true, fontFace: 'Arial' }); s.addText(title, { x: x + 0.7, y: y + 0.15, w: 3.5, h: 0.4, fontSize: 13, color: TEAL, bold: true, fontFace: 'Arial' }); }); sn(s, n); }
 
-  // Slide 10: Problem Statement
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Problem Statement');
-    const paras = [
-      '1. Contemporary IAM systems rely on centralized identity directories and classical cryptographic primitives that are vulnerable to quantum attacks. Healthcare records with 25–50 year retention are uniquely exposed.',
-      '2. Existing blockchain-based IAM proposals retain classical cryptographic schemes (ECDSA, SHA-256) that are quantum-vulnerable. A quantum-vulnerable blockchain is not a quantum-resistant system.',
-      '3. No existing system integrates NIST-standardized post-quantum primitives as the native mechanism within a permissioned blockchain IAM architecture for healthcare.',
-    ];
-    paras.forEach((p, i) => {
-      s.addText(p, { x: 0.5, y: 1.2 + i * 1.6, w: 9, h: 1.4, fontSize: 11, color: 'CBD5E1', fontFace: 'Arial', lineSpacingMultiple: 1.5, valign: 'top' });
-    });
-    addCard(s, 0.5, 5.8, 9, 0.7, TEAL);
-    s.addText('HelixID is designed to solve all three of these problems within a single, unified architectural framework.', {
-      x: 0.7, y: 5.9, w: 8.6, h: 0.5, fontSize: 11, color: TEAL, bold: true, fontFace: 'Arial',
-    });
-    addSlideNumber(s, 10);
-  }
+  // 9 — Section Divider: Existing System
+  { const s = add(); divider(s, '04', 'Existing System Overview', 'How healthcare IAM works today and where it fails'); sn(s, n); }
 
-  // Slide 11: Tech Stack
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Technology Stack');
-    const layers = [
-      ['Cryptographic Primitives', VIOLET, 'Dilithium3, Kyber768, SHA3-256, Groth16 zk-SNARKs'],
-      ['Blockchain Infrastructure', TEAL, 'Hyperledger Fabric 2.5 / In-Browser Engine, PBFT Consensus'],
-      ['Identity and Policy', '3B82F6', 'W3C DID Core, Smart Contract RBAC, Credential Lifecycle'],
-      ['Application', '64748B', 'React 18, TypeScript, Tailwind, Zustand, Reveal.js'],
-    ];
-    layers.forEach(([name, color, items], i) => {
-      const y = 1.2 + i * 1.3;
-      addCard(s, 0.5, y, 9, 1.1, color);
-      s.addShape('rect' as any, { x: 0.5, y, w: 0.08, h: 1.1, fill: { color } });
-      s.addText(name, { x: 0.8, y: y + 0.05, w: 3, h: 0.4, fontSize: 12, color, bold: true, fontFace: 'Arial' });
-      s.addText(items, { x: 0.8, y: y + 0.45, w: 8.5, h: 0.5, fontSize: 9, color: MUTED, fontFace: 'Arial' });
-    });
-    addSlideNumber(s, 11);
-  }
+  // 10 — Existing System
+  { const s = add(); h(s, 'Current Healthcare IAM Architecture'); const items = [['Active Directory / LDAP', 'Centralized identity store — single point of failure and compromise'], ['RSA-2048 / ECC Encryption', 'Quantum-vulnerable within 5–10 years (Shor\'s algorithm)'], ['Database Audit Logs', 'Mutable by administrators — can be silently altered or deleted'], ['Config-file Access Policies', 'No governance trail — policy changes are invisible']]; items.forEach(([t, d], i) => { const y = 1.2 + i * 1.3; card(s, 0.5, y, 9, 1.1, DANGER); s.addText(t, { x: 0.7, y: y + 0.1, w: 3, h: 0.4, fontSize: 12, color: DANGER, bold: true, fontFace: 'Arial' }); s.addText(d, { x: 3.8, y: y + 0.1, w: 5.5, h: 0.8, fontSize: 10, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.3 }); }); sn(s, n); }
 
-  // Slide 12: Architecture
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Architecture at a Glance');
-    // Identity Layer
-    s.addText('IDENTITY LAYER', { x: 3, y: 1.1, w: 4, h: 0.3, fontSize: 10, color: MUTED, align: 'center', fontFace: 'Arial', bold: true });
-    ['Patient DID', 'Staff DID', 'Moderator DID', 'Admin DID'].forEach((did, i) => {
-      const x = 1 + i * 2.2;
-      addCard(s, x, 1.5, 1.8, 0.5, TEAL);
-      s.addText(did, { x, y: 1.55, w: 1.8, h: 0.4, fontSize: 9, color: TEXT, align: 'center', fontFace: 'Arial' });
-    });
-    // Security Layer
-    s.addText('SECURITY LAYER', { x: 3, y: 2.5, w: 4, h: 0.3, fontSize: 10, color: TEAL, align: 'center', fontFace: 'Arial', bold: true });
-    ['Kyber768 Auth', 'Dilithium Verification', 'Smart Contract RBAC'].forEach((item, i) => {
-      const x = 0.8 + i * 3.1;
-      addCard(s, x, 2.9, 2.8, 0.7, TEAL);
-      s.addText(item, { x, y: 3, w: 2.8, h: 0.5, fontSize: 10, color: TEXT, align: 'center', fontFace: 'Arial', bold: true });
-    });
-    // Infrastructure Layer
-    s.addText('INFRASTRUCTURE LAYER', { x: 3, y: 4.2, w: 4, h: 0.3, fontSize: 10, color: MUTED, align: 'center', fontFace: 'Arial', bold: true });
-    addCard(s, 1.5, 4.6, 3.5, 0.7, VIOLET);
-    s.addText('Permissioned Blockchain Ledger', { x: 1.5, y: 4.7, w: 3.5, h: 0.5, fontSize: 10, color: TEXT, align: 'center', fontFace: 'Arial' });
-    addCard(s, 5.5, 4.6, 2.5, 0.7, VIOLET);
-    s.addText('EHR Resources', { x: 5.5, y: 4.7, w: 2.5, h: 0.5, fontSize: 10, color: TEXT, align: 'center', fontFace: 'Arial' });
-    s.addText('Every arrow represents a cryptographically signed, blockchain-recorded event.', { x: 1, y: 5.8, w: 8, h: 0.3, fontSize: 9, color: MUTED, italic: true, align: 'center', fontFace: 'Arial' });
-    addSlideNumber(s, 12);
-  }
+  // 11 — Traditional Gap
+  { const s = add(); h(s, 'What Traditional IAM Gets Wrong'); const rows = [['Centralized identity database', 'Decentralized Identity on blockchain'], ['Classical RSA/ECC encryption', 'CRYSTALS-Dilithium3 + Kyber768'], ['Database audit logs (mutable)', 'Immutable blockchain ledger'], ['Access policies in config files', 'Smart contract policies on-chain'], ['Credentials in central directory', 'Credentials as on-chain DID Documents']]; s.addText('Traditional IAM', { x: 0.5, y: 1.1, w: 4, h: 0.4, fontSize: 13, color: DANGER, bold: true, fontFace: 'Arial' }); s.addText('What HelixID Does', { x: 5.5, y: 1.1, w: 4, h: 0.4, fontSize: 13, color: TEAL, bold: true, fontFace: 'Arial' }); rows.forEach(([old, hx], i) => { const y = 1.6 + i * 0.9; s.addText(old, { x: 0.5, y, w: 4, h: 0.7, fontSize: 10, color: MUTED, fontFace: 'Arial' }); s.addText('→', { x: 4.6, y, w: 0.5, h: 0.7, fontSize: 14, color: TEAL, align: 'center', fontFace: 'Arial' }); s.addText(hx, { x: 5.3, y, w: 4.2, h: 0.7, fontSize: 10, color: 'CBD5E1', fontFace: 'Arial' }); }); sn(s, n); }
 
-  // Slide 13: Post-Quantum
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Why Classical Encryption Fails');
-    addCard(s, 0.5, 1.2, 4.2, 3.5, DANGER);
-    s.addText('🔓 RSA-2048', { x: 0.7, y: 1.4, w: 3.8, h: 0.5, fontSize: 16, color: DANGER, bold: true, align: 'center', fontFace: 'Arial' });
-    s.addText('Security based on integer factorization.\nShor\'s algorithm solves this in polynomial time.', { x: 0.7, y: 2, w: 3.8, h: 1, fontSize: 10, color: MUTED, align: 'center', fontFace: 'Arial', lineSpacingMultiple: 1.3 });
-    s.addText('Classical: O(eⁿ) → Quantum: O(n³)', { x: 1, y: 3.5, w: 3.2, h: 0.4, fontSize: 10, color: DANGER, align: 'center', fontFace: 'Courier New' });
+  // 12 — Section Divider: Proposed System
+  { const s = add(); divider(s, '05', 'Proposed System', 'HelixID — a quantum-resistant blockchain IAM architecture'); sn(s, n); }
 
-    addCard(s, 5.3, 1.2, 4.2, 3.5, SUCCESS);
-    s.addText('🔐 CRYSTALS-Dilithium3', { x: 5.5, y: 1.4, w: 3.8, h: 0.5, fontSize: 16, color: SUCCESS, bold: true, align: 'center', fontFace: 'Arial' });
-    s.addText('Security based on Module Learning With Errors.\nNo known quantum algorithm provides advantage.', { x: 5.5, y: 2, w: 3.8, h: 1, fontSize: 10, color: MUTED, align: 'center', fontFace: 'Arial', lineSpacingMultiple: 1.3 });
-    s.addText('Classical: O(eⁿ) → Quantum: O(eⁿ)', { x: 5.8, y: 3.5, w: 3.2, h: 0.4, fontSize: 10, color: SUCCESS, align: 'center', fontFace: 'Courier New' });
-    addSlideNumber(s, 13);
-  }
+  // 13 — Intro HelixID
+  { const s = add(); s.addText('HelixID', { x: 1, y: 2, w: 8, h: 1.2, fontSize: 48, color: TEAL, bold: true, align: 'center', fontFace: 'Arial' }); s.addText('Post-Quantum Cryptographic Identity Management —\nBuilt on Blockchain. Built for Healthcare. Built for the Future.', { x: 1.5, y: 3.3, w: 7, h: 0.8, fontSize: 13, color: MUTED, align: 'center', fontFace: 'Arial', lineSpacingMultiple: 1.3 }); sn(s, n); }
 
-  // Slide 14: DID
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Every Identity Lives on the Blockchain');
-    addCard(s, 0.5, 1.2, 4.2, 4, TEAL);
-    s.addText('DID Document', { x: 0.7, y: 1.3, w: 3.8, h: 0.3, fontSize: 10, color: MUTED, fontFace: 'Arial' });
-    const didLines = [
-      'DID: did:helix:0x4a3f9c2d8b1e...',
-      'Public Key: [Dilithium3 — 1,952 bytes]',
-      'Issued Block: #12,441',
-      'Credential Hash: SHA3-256: 0x7c2f9a4d...',
-      'Status: ● ACTIVE',
-    ];
-    didLines.forEach((line, i) => {
-      s.addText(line, { x: 0.7, y: 1.7 + i * 0.5, w: 3.8, h: 0.4, fontSize: 9, color: i === 0 ? TEAL : 'CBD5E1', fontFace: 'Courier New' });
-    });
-    const benefits = ['No central database', 'Self-sovereign', 'Portable'];
-    benefits.forEach((b, i) => {
-      s.addText(b, { x: 5.3, y: 1.3 + i * 1.2, w: 4, h: 0.4, fontSize: 13, color: TEAL, bold: true, fontFace: 'Arial' });
-    });
-    addSlideNumber(s, 14);
-  }
+  // 14 — Why Quantum
+  { const s = add(); h(s, 'The Quantum Threat Timeline'); s.addText('"By 2031, RSA-2048 encryption — protecting 90% of today\'s digital infrastructure — will be breakable by quantum computers."', { x: 0.5, y: 1.5, w: 7, h: 1.2, fontSize: 20, color: TEAL, bold: true, fontFace: 'Arial', lineSpacingMultiple: 1.3 }); s.addText('— NIST Post-Quantum Cryptography Project, 2024', { x: 0.5, y: 2.8, w: 5, h: 0.3, fontSize: 9, color: MUTED, italic: true, fontFace: 'Arial' }); card(s, 0.5, 3.5, 9, 1.5, DANGER); s.addText('Patient medical records are legally retained for 50+ years. A record encrypted with RSA today is readable to a quantum-equipped adversary before that retention period ends.', { x: 0.7, y: 3.6, w: 8.6, h: 1.3, fontSize: 12, color: TEXT, fontFace: 'Arial', lineSpacingMultiple: 1.4 }); sn(s, n); }
 
-  // Slide 15: Blockchain
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'An Audit Trail That Cannot Lie');
-    const blocks = [
-      { num: '14,841', hash: '0x9f3a...', prev: '0x7d1b...' },
-      { num: '14,842', hash: '0x4c2d...', prev: '0x9f3a...' },
-      { num: '14,843', hash: '0x7b1e...', prev: '0x4c2d...' },
-    ];
-    blocks.forEach((b, i) => {
-      const x = 0.5 + i * 3.2;
-      addCard(s, x, 1.3, 2.8, 2);
-      s.addText(`Block #${b.num}`, { x: x + 0.15, y: 1.4, w: 2.5, h: 0.4, fontSize: 12, color: TEAL, bold: true, fontFace: 'Arial' });
-      s.addText(`Hash: ${b.hash}`, { x: x + 0.15, y: 1.85, w: 2.5, h: 0.3, fontSize: 9, color: TEAL, fontFace: 'Courier New' });
-      s.addText(`Prev: ${b.prev}`, { x: x + 0.15, y: 2.2, w: 2.5, h: 0.3, fontSize: 9, color: MUTED, fontFace: 'Courier New' });
-    });
-    s.addText('Changing any transaction invalidates the entire chain — detectable instantly.', {
-      x: 0.5, y: 4, w: 9, h: 0.5, fontSize: 11, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.4,
-    });
-    addSlideNumber(s, 15);
-  }
+  // 15 — Post-Quantum Algorithms
+  { const s = add(); h(s, 'Why Classical Encryption Fails'); card(s, 0.5, 1.2, 4.2, 3, DANGER); s.addText('🔓 RSA-2048', { x: 0.7, y: 1.4, w: 3.8, h: 0.5, fontSize: 16, color: DANGER, bold: true, align: 'center', fontFace: 'Arial' }); s.addText('Shor\'s algorithm: O(n³)', { x: 1, y: 2.2, w: 3.2, h: 0.4, fontSize: 10, color: DANGER, align: 'center', fontFace: 'Courier New' }); card(s, 5.3, 1.2, 4.2, 3, SUCCESS); s.addText('🔐 CRYSTALS-Dilithium3', { x: 5.5, y: 1.4, w: 3.8, h: 0.5, fontSize: 16, color: SUCCESS, bold: true, align: 'center', fontFace: 'Arial' }); s.addText('MLWE: Quantum = Classical O(eⁿ)', { x: 5.8, y: 2.2, w: 3.2, h: 0.4, fontSize: 10, color: SUCCESS, align: 'center', fontFace: 'Courier New' }); sn(s, n); }
 
-  // Slide 16: Smart Contract
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Access Policies That Enforce Themselves');
-    addCard(s, 0.5, 1.2, 6, 3, TEAL);
-    s.addText(`POLICY RULE #3 — Contract: 0x8c2f4a7d...\n─────────────────────────────────────\nIF   role        == "hospital_staff"\nAND  department  == "cardiology"\nAND  patient.consent == true\nTHEN ALLOW access TO cardiology_records\nWITH level "read-write"\nFOR  DURATION 72 hours\n─────────────────────────────────────\nDeployed: Block #13,201 | By: DID:0x1c6b...`, {
-      x: 0.7, y: 1.4, w: 5.6, h: 2.6, fontSize: 9, color: MUTED, fontFace: 'Courier New', lineSpacingMultiple: 1.3, valign: 'top',
-    });
-    const points = ['Rules live on-chain', 'Every access decision logs', 'New policies require Dilithium signature'];
-    points.forEach((p, i) => {
-      s.addText(`● ${p}`, { x: 0.5, y: 4.5 + i * 0.5, w: 9, h: 0.4, fontSize: 11, color: 'CBD5E1', fontFace: 'Arial' });
-    });
-    addSlideNumber(s, 16);
-  }
+  // 16 — DID
+  { const s = add(); h(s, 'Every Identity Lives on the Blockchain'); card(s, 0.5, 1.2, 4.2, 4, TEAL); s.addText('DID Document', { x: 0.7, y: 1.3, w: 3.8, h: 0.3, fontSize: 10, color: MUTED, fontFace: 'Arial' }); ['DID: did:helix:0x4a3f9c2d8b1e...', 'Public Key: [Dilithium3 — 1,952 bytes]', 'Issued Block: #12,441', 'Credential Hash: SHA3-256: 0x7c2f9a4d...', 'Status: ● ACTIVE'].forEach((line, i) => { s.addText(line, { x: 0.7, y: 1.7 + i * 0.5, w: 3.8, h: 0.4, fontSize: 9, color: i === 0 ? TEAL : 'CBD5E1', fontFace: 'Courier New' }); }); ['No central database', 'Self-sovereign', 'Portable'].forEach((b, i) => { s.addText(b, { x: 5.3, y: 1.3 + i * 1.2, w: 4, h: 0.4, fontSize: 13, color: TEAL, bold: true, fontFace: 'Arial' }); }); sn(s, n); }
 
-  // Slide 17: ZKP
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Prove What You Know Without Revealing It');
-    const steps = [
-      ['👨‍⚕️ Doctor from External Hospital', '"I need to prove I\'m a licensed physician"', '64748B'],
-      ['ZKP Engine — Groth16 zk-SNARK', 'Generates proof π WITHOUT transmitting credential', VIOLET],
-      ['HelixID Verifier', '"Credential: VALID ✓" — without knowing personal data', SUCCESS],
-    ];
-    steps.forEach(([title, detail, color], i) => {
-      const y = 1.2 + i * 1.6;
-      addCard(s, 2, y, 6, 1.2, color);
-      s.addText(title, { x: 2.2, y: y + 0.1, w: 5.6, h: 0.4, fontSize: 12, color, bold: true, align: 'center', fontFace: 'Arial' });
-      s.addText(detail, { x: 2.2, y: y + 0.55, w: 5.6, h: 0.4, fontSize: 9, color: MUTED, align: 'center', fontFace: 'Arial' });
-    });
-    addSlideNumber(s, 17);
-  }
+  // 17 — Blockchain
+  { const s = add(); h(s, 'An Audit Trail That Cannot Lie'); [{ num: '14,841', hash: '0x9f3a...' }, { num: '14,842', hash: '0x4c2d...' }, { num: '14,843', hash: '0x7b1e...' }].forEach((b, i) => { const x = 0.5 + i * 3.2; card(s, x, 1.3, 2.8, 1.8); s.addText(`Block #${b.num}`, { x: x + 0.15, y: 1.4, w: 2.5, h: 0.4, fontSize: 12, color: TEAL, bold: true, fontFace: 'Arial' }); s.addText(`Hash: ${b.hash}`, { x: x + 0.15, y: 1.85, w: 2.5, h: 0.3, fontSize: 9, color: TEAL, fontFace: 'Courier New' }); }); s.addText('Changing any transaction invalidates the entire chain — detectable instantly.', { x: 0.5, y: 3.8, w: 9, h: 0.5, fontSize: 11, color: MUTED, fontFace: 'Arial' }); sn(s, n); }
 
-  // Slide 18: Four Actors
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    s.addText('03', { x: 7, y: 1, w: 2.5, h: 3, fontSize: 120, color: '0D1520', bold: true, fontFace: 'Arial' });
-    s.addText('The System in Action', { x: 0.5, y: 0.5, w: 6, h: 0.5, fontSize: 14, color: TEAL, fontFace: 'Arial' });
-    const actors = [
-      ['🏥', 'Patient', '3B82F6', 'Owns identity. Controls data consent. ZKP credential proofs.'],
-      ['👨‍⚕️', 'Hospital Staff', TEAL, 'Requests access via smart contracts. Emergency override.'],
-      ['👩‍💼', 'Department Head', WARNING, 'Approves access. Policy governance. Audit visibility.'],
-      ['🔐', 'IT Admin', VIOLET, 'Identity lifecycle. Blockchain explorer. Smart contract deployment.'],
-    ];
-    actors.forEach(([icon, role, color, desc], i) => {
-      const col = i % 2;
-      const row = Math.floor(i / 2);
-      const x = 0.5 + col * 4.7;
-      const y = 1.3 + row * 2.3;
-      addCard(s, x, y, 4.4, 2, color);
-      s.addText(`${icon} ${role}`, { x: x + 0.2, y: y + 0.15, w: 4, h: 0.5, fontSize: 14, color, bold: true, fontFace: 'Arial' });
-      s.addText(desc, { x: x + 0.2, y: y + 0.7, w: 4, h: 1, fontSize: 10, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.3, valign: 'top' });
-    });
-    addSlideNumber(s, 18);
-  }
+  // 18 — Smart Contract
+  { const s = add(); h(s, 'Access Policies That Enforce Themselves'); card(s, 0.5, 1.2, 6, 3, TEAL); s.addText(`POLICY RULE #3\n─────────────────────────\nIF role == "hospital_staff"\nAND department == "cardiology"\nTHEN ALLOW access\nFOR DURATION 72 hours`, { x: 0.7, y: 1.4, w: 5.6, h: 2.6, fontSize: 9, color: MUTED, fontFace: 'Courier New', lineSpacingMultiple: 1.3, valign: 'top' }); sn(s, n); }
 
-  // Slide 19: Feature Map
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Complete IAM Feature Coverage');
-    const features = [
-      ['Authentication', 'All roles', 'LOGIN_SUCCESS / LOGIN_FAILED', 'Kyber768 + Dilithium MFA'],
-      ['Identity Issuance', 'Admin', 'IDENTITY_REGISTERED', 'Dilithium key pair + DID'],
-      ['Credential Lifecycle', 'Admin/Mod', 'CREDENTIAL_ISSUED / REVOKED', 'Dilithium-signed TX'],
-      ['RBAC', 'Contract', 'ACCESS_GRANTED / DENIED', 'Contract address on-chain'],
-      ['Access Request', 'Staff→Mod', 'ACCESS_REQUESTED', 'Dilithium-signed approval'],
-      ['Delegation', 'Staff', 'CREDENTIAL_DELEGATED', 'Delegator\'s Dilithium sig'],
-      ['Break-Glass', 'Staff', 'EMERGENCY_ACCESS', 'Permanent on-chain record'],
-      ['ZKP Proof', 'Patient/Staff', 'ZKP_PROOF_GENERATED', 'Groth16 proof structure'],
-      ['Session Mgmt', 'All roles', 'SESSION_EXPIRED', 'Kyber-derived session token'],
-      ['Consent Mgmt', 'Patient', 'CONSENT_UPDATED', 'Patient\'s Dilithium sig'],
-    ];
-    const headers = ['Feature', 'Actor', 'Blockchain Event', 'Quantum Protection'];
-    headers.forEach((h, i) => {
-      const xs = [0.5, 2.6, 4.2, 7];
-      const ws = [2, 1.5, 2.7, 2.8];
-      s.addText(h, { x: xs[i], y: 1.1, w: ws[i], h: 0.4, fontSize: 9, color: TEAL, bold: true, fontFace: 'Arial' });
-    });
-    features.forEach((row, i) => {
-      const y = 1.55 + i * 0.48;
-      const xs = [0.5, 2.6, 4.2, 7];
-      const ws = [2, 1.5, 2.7, 2.8];
-      row.forEach((cell, j) => {
-        s.addText(cell, { x: xs[j], y, w: ws[j], h: 0.4, fontSize: 8, color: j === 0 ? 'CBD5E1' : MUTED, fontFace: j === 2 ? 'Courier New' : 'Arial' });
-      });
-    });
-    addSlideNumber(s, 19);
-  }
+  // 19 — ZKP
+  { const s = add(); h(s, 'Prove What You Know Without Revealing It'); [['👨‍⚕️ Doctor from External Hospital', '"I need to prove I\'m a licensed physician"', '64748B'], ['ZKP Engine — Groth16 zk-SNARK', 'Generates proof π WITHOUT transmitting credential', VIOLET], ['HelixID Verifier', '"Credential: VALID ✓" — without knowing personal data', SUCCESS]].forEach(([t, d, c], i) => { const y = 1.2 + i * 1.6; card(s, 2, y, 6, 1.2, c); s.addText(t, { x: 2.2, y: y + 0.1, w: 5.6, h: 0.4, fontSize: 12, color: c, bold: true, align: 'center', fontFace: 'Arial' }); s.addText(d, { x: 2.2, y: y + 0.55, w: 5.6, h: 0.4, fontSize: 9, color: MUTED, align: 'center', fontFace: 'Arial' }); }); sn(s, n); }
 
-  // Slide 20: Demo Auth
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Demo: Quantum-Safe Login');
-    const steps = [
-      ['User Clicks Login', '64748B'],
-      ['Kyber768 Key Encapsulation Handshake', VIOLET],
-      ['Dilithium MFA Challenge-Response', TEAL],
-      ['Session Token Created', SUCCESS],
-    ];
-    steps.forEach(([step, color], i) => {
-      s.addShape('rect' as any, { x: 0.5, y: 1.3 + i * 1.2, w: 0.06, h: 0.9, fill: { color } });
-      s.addText(step, { x: 0.8, y: 1.3 + i * 1.2, w: 5, h: 0.4, fontSize: 12, color, bold: true, fontFace: 'Arial' });
-    });
-    addCard(s, 6, 1.3, 3.5, 3, TEAL);
-    s.addText('MFA Verification Modal', { x: 6.2, y: 1.5, w: 3.1, h: 0.3, fontSize: 9, color: MUTED, align: 'center', fontFace: 'Arial' });
-    s.addText('Nonce: 0xa7c3f2...\nSigning with Dilithium3...\n✓ Signature Verified', { x: 6.2, y: 2, w: 3.1, h: 1.2, fontSize: 9, color: 'CBD5E1', fontFace: 'Courier New', lineSpacingMultiple: 1.5 });
-    s.addText('TX: 0x9f3a... | Block #14,856', { x: 6.2, y: 3.4, w: 3.1, h: 0.3, fontSize: 8, color: MUTED, align: 'center', fontFace: 'Courier New' });
-    addSlideNumber(s, 20);
-  }
+  // 20 — Four Actors
+  { const s = add(); h(s, 'Four-Actor Architecture'); [['🏥 Patient', '3B82F6'], ['👨‍⚕️ Hospital Staff', TEAL], ['👩‍💼 Department Head', WARNING], ['🔐 IT Admin', VIOLET]].forEach(([role, c], i) => { const col = i % 2; const row = Math.floor(i / 2); const x = 0.5 + col * 4.7; const y = 1.3 + row * 2.3; card(s, x, y, 4.4, 2, c as string); s.addText(role, { x: x + 0.2, y: y + 0.2, w: 4, h: 0.5, fontSize: 14, color: c as string, bold: true, fontFace: 'Arial' }); }); sn(s, n); }
 
-  // Slide 21: Demo Access
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Demo: Smart Contract Access Enforcement');
-    const panels = [
-      ['1. Dr. Okafor Requests', TEAL, 'Request signed with Dilithium key.\nTransaction broadcast to blockchain.'],
-      ['2. Dr. Nair Reviews', WARNING, 'Department Head approves.\nSmart contract called.'],
-      ['3. Access Granted On-Chain', SUCCESS, 'Event: ACCESS_GRANTED\nBlock #14,852'],
-    ];
-    panels.forEach(([title, color, text], i) => {
-      const x = 0.5 + i * 3.2;
-      addCard(s, x, 1.2, 2.9, 3.5, color);
-      s.addText(title, { x: x + 0.15, y: 1.3, w: 2.6, h: 0.4, fontSize: 11, color, bold: true, fontFace: 'Arial' });
-      s.addText(text, { x: x + 0.15, y: 2, w: 2.6, h: 2, fontSize: 9, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.3, valign: 'top' });
-    });
-    addSlideNumber(s, 21);
-  }
+  // 21 — Feature Map
+  { const s = add(); h(s, 'Complete IAM Feature Coverage'); const feats = [['Authentication', 'All roles', 'Kyber768 + Dilithium MFA'], ['Identity Issuance', 'Admin', 'Dilithium key pair + DID'], ['Credential Lifecycle', 'Admin/Mod', 'Dilithium-signed TX'], ['RBAC', 'Contract', 'Contract address on-chain'], ['Delegation', 'Staff', 'Delegator\'s Dilithium sig'], ['Break-Glass', 'Staff', 'Permanent on-chain record'], ['ZKP Proof', 'Patient/Staff', 'Groth16 proof'], ['Session Mgmt', 'All roles', 'Kyber-derived token'], ['Consent Mgmt', 'Patient', 'Patient\'s Dilithium sig']]; ['Feature', 'Actor', 'Quantum Protection'].forEach((ht, i) => { s.addText(ht, { x: [0.5, 3, 5.5][i], y: 1.1, w: [2.4, 2.4, 4][i], h: 0.4, fontSize: 9, color: TEAL, bold: true, fontFace: 'Arial' }); }); feats.forEach((row, i) => { const y = 1.55 + i * 0.52; row.forEach((cell, j) => { s.addText(cell, { x: [0.5, 3, 5.5][j], y, w: [2.4, 2.4, 4][j], h: 0.4, fontSize: 8, color: j === 0 ? 'CBD5E1' : MUTED, fontFace: 'Arial' }); }); }); sn(s, n); }
 
-  // Slide 22: Demo Tamper
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Demo: Why the Audit Trail Cannot Be Falsified');
-    addCard(s, 0.5, 1.2, 4.4, 3.5, SUCCESS);
-    s.addText('Before Tampering', { x: 0.7, y: 1.3, w: 4, h: 0.4, fontSize: 13, color: SUCCESS, bold: true, fontFace: 'Arial' });
-    s.addText('Block #14,841\nHash: 0x9f3a2c8d...\n● VALID', { x: 0.7, y: 1.9, w: 4, h: 1.5, fontSize: 10, color: 'CBD5E1', fontFace: 'Courier New', lineSpacingMultiple: 1.5 });
+  // 22 — Section Divider: HW/SW Requirements
+  { const s = add(); divider(s, '06', 'Hardware & Software Requirements', 'Infrastructure specifications for demo and production'); sn(s, n); }
 
-    addCard(s, 5.3, 1.2, 4.4, 3.5, DANGER);
-    s.addText('After Attacker Modifies Record', { x: 5.5, y: 1.3, w: 4, h: 0.4, fontSize: 13, color: DANGER, bold: true, fontFace: 'Arial' });
-    s.addText('Block #14,841\nHash: 0xf72b9d1a...\n✗ TAMPERED — DETECTED\n\nBlock #14,842\n✗ CHAIN BROKEN', { x: 5.5, y: 1.9, w: 4, h: 2.5, fontSize: 10, color: DANGER, fontFace: 'Courier New', lineSpacingMultiple: 1.4 });
+  // 23 — Hardware Requirements
+  { const s = add(); h(s, 'Hardware Requirements'); s.addText('Demo Environment', { x: 0.5, y: 1.1, w: 4, h: 0.4, fontSize: 13, color: TEAL, bold: true, fontFace: 'Arial' }); s.addText('• Modern browser, 4GB RAM minimum\n• No server required — all crypto runs in-browser\n• 2–4s initialization for 6 key pairs', { x: 0.5, y: 1.6, w: 4.5, h: 2, fontSize: 10, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.4 }); s.addText('Production Environment', { x: 5.3, y: 1.1, w: 4, h: 0.4, fontSize: 13, color: VIOLET, bold: true, fontFace: 'Arial' }); s.addText('• 4–7 Validator Nodes (8-core, 32GB)\n• 1–3 Ordering Service Nodes\n• HSM (Thales Luna 7 FIPS 140-2 L3)\n• CA Server + Load Balancer', { x: 5.3, y: 1.6, w: 4.2, h: 2.5, fontSize: 10, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.4 }); sn(s, n); }
 
-    s.addText('The SHA3-256 hashing is mathematically real in the demo — not a simulation.', {
-      x: 0.5, y: 5.2, w: 9, h: 0.5, fontSize: 11, color: TEAL, bold: true, fontFace: 'Arial',
-    });
-    addSlideNumber(s, 22);
-  }
+  // 24 — Software Requirements
+  { const s = add(); h(s, 'Software Requirements'); const quads = [['🔐 Crypto', VIOLET, 'noble-post-quantum, @noble/hashes, snarkjs'], ['⚛ Frontend', TEAL, 'React 18, TypeScript 5, Tailwind, Zustand'], ['⛓ Blockchain', SUCCESS, 'Hyperledger Fabric 2.5, Docker, CouchDB, Go'], ['🛠 Dev Tools', WARNING, 'Node.js 20, Vite 5, ESLint, Git']]; quads.forEach(([t, c, items], i) => { const col = i % 2; const row = Math.floor(i / 2); const x = 0.5 + col * 4.7; const y = 1.1 + row * 2.5; card(s, x, y, 4.4, 2.2, c); s.addText(t, { x: x + 0.2, y: y + 0.1, w: 4, h: 0.4, fontSize: 12, color: c, bold: true, fontFace: 'Arial' }); s.addText(items, { x: x + 0.2, y: y + 0.6, w: 4, h: 1.4, fontSize: 9, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.4 }); }); sn(s, n); }
 
-  // Slide 23: Demo Emergency
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Demo: Break-Glass with Full Accountability');
-    s.addText('The Problem', { x: 0.5, y: 1.2, w: 4, h: 0.4, fontSize: 13, color: DANGER, bold: true, fontFace: 'Arial' });
-    s.addText('In emergencies, rigid access control can cost lives. Traditional IAM uses admin backdoors that leave no trace.', {
-      x: 0.5, y: 1.7, w: 4, h: 1.5, fontSize: 10, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.4, valign: 'top',
-    });
-    s.addText('How HelixID Handles It', { x: 5.3, y: 1.2, w: 4, h: 0.4, fontSize: 13, color: TEAL, bold: true, fontFace: 'Arial' });
-    const steps = ['Emergency occurs', 'Staff invokes Break-Glass override', 'EMERGENCY_ACCESS_INVOKED transaction (permanent)', 'Immediate alert to all Admins', 'Access Granted Immediately'];
-    steps.forEach((step, i) => {
-      s.addText(`● ${step}`, { x: 5.3, y: 1.7 + i * 0.55, w: 4.2, h: 0.45, fontSize: 9, color: 'CBD5E1', fontFace: 'Arial' });
-    });
-    addCard(s, 0.5, 5, 9, 0.8, TEAL);
-    s.addText('HelixID makes emergency access inevitable, immediate, and permanently accountable.', {
-      x: 0.7, y: 5.1, w: 8.6, h: 0.6, fontSize: 11, color: TEAL, bold: true, fontFace: 'Arial',
-    });
-    addSlideNumber(s, 23);
-  }
+  // 25 — Section Divider: Modules
+  { const s = add(); divider(s, '07', 'List of Modules', 'Eight system modules across three architectural layers'); sn(s, n); }
 
-  // Slide 24: Implementation
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'How the System Was Built');
-    addCard(s, 0.5, 1.2, 4.5, 4.5);
-    s.addText(`src/\n├── lib/\n│   ├── crypto.ts     ← Dilithium + Kyber\n│   ├── blockchain.ts ← SHA3-256 blocks\n│   ├── contracts.ts  ← Smart contract\n│   └── did.ts        ← DID generation\n├── store/\n│   ├── cryptoStore.ts\n│   ├── blockchainStore.ts\n│   └── authStore.ts\n├── pages/\n│   ├── Patient.tsx\n│   ├── Staff.tsx\n│   ├── Moderator.tsx\n│   └── Admin.tsx\n└── presentation/`, {
-      x: 0.7, y: 1.4, w: 4.1, h: 4.1, fontSize: 8, color: 'CBD5E1', fontFace: 'Courier New', lineSpacingMultiple: 1.3, valign: 'top',
-    });
-    const modules = [
-      ['crypto.ts', 'Real post-quantum operations using noble-post-quantum.'],
-      ['blockchain.ts', 'Genuine SHA3-256 block hashing. Real Merkle tree computation.'],
-      ['contracts.ts', 'Policy evaluation engine mirroring Hyperledger Chaincode.'],
-    ];
-    modules.forEach(([name, desc], i) => {
-      const y = 1.3 + i * 1.4;
-      addCard(s, 5.3, y, 4.2, 1.2, TEAL);
-      s.addText(name, { x: 5.5, y: y + 0.1, w: 3.8, h: 0.3, fontSize: 10, color: TEAL, bold: true, fontFace: 'Courier New' });
-      s.addText(desc, { x: 5.5, y: y + 0.45, w: 3.8, h: 0.6, fontSize: 9, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.3 });
-    });
-    addSlideNumber(s, 24);
-  }
+  // 26 — Modules Overview
+  { const s = add(); h(s, 'Module Architecture Overview'); [['Layer 1: Crypto Foundation', VIOLET, 'M1: Cryptographic Engine, M2: Blockchain Engine, M3: Smart Contract Engine'], ['Layer 2: Identity & Session', TEAL, 'M4: DID Management, M5: Auth & Session Manager'], ['Layer 3: Application Interface', WARNING, 'M6: Patient Portal, M7: Staff & Moderator, M8: Admin Governance']].forEach(([t, c, m], i) => { const y = 1.2 + i * 1.7; card(s, 0.5, y, 9, 1.4, c); s.addText(t, { x: 0.7, y: y + 0.1, w: 4, h: 0.4, fontSize: 12, color: c, bold: true, fontFace: 'Arial' }); s.addText(m, { x: 0.7, y: y + 0.55, w: 8.5, h: 0.7, fontSize: 10, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.3 }); }); sn(s, n); }
 
-  // Slide 25: Real vs Simulated
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Technical Transparency — What Is Real');
-    addCard(s, 0.5, 1.2, 4.4, 4.5, TEAL);
-    s.addText('🔐 Cryptographically Real', { x: 0.7, y: 1.3, w: 4, h: 0.4, fontSize: 12, color: TEAL, bold: true, fontFace: 'Arial' });
-    const realItems = ['SHA3-256 block hashes', 'Dilithium3 key pairs & signing', 'Kyber768 key encapsulation', 'DID computation from public keys', 'Blockchain chain validation', 'Merkle tree construction'];
-    realItems.forEach((item, i) => {
-      s.addText(`✓ ${item}`, { x: 0.7, y: 1.8 + i * 0.55, w: 4, h: 0.45, fontSize: 9, color: 'CBD5E1', fontFace: 'Arial' });
-    });
+  // 27 — Modules 1–3 (Foundation)
+  { const s = add(); h(s, 'Modules 1–3: Cryptographic & Blockchain Foundation'); [['M1: Crypto Engine', VIOLET, 'crypto.ts — Dilithium3 + Kyber768 + SHA3-256'], ['M2: Blockchain Engine', TEAL, 'blockchain.ts — SHA3-256 chaining, Merkle trees, validation'], ['M3: Smart Contract Engine', SUCCESS, 'contracts.ts — RBAC evaluation, policy deployment']].forEach(([t, c, d], i) => { const x = 0.5 + i * 3.2; card(s, x, 1.2, 2.9, 3.5, c); s.addText(t, { x: x + 0.15, y: 1.3, w: 2.6, h: 0.4, fontSize: 10, color: c, bold: true, fontFace: 'Arial' }); s.addText(d, { x: x + 0.15, y: 1.8, w: 2.6, h: 2.5, fontSize: 9, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.4 }); }); sn(s, n); }
 
-    addCard(s, 5.3, 1.2, 4.4, 4.5, '64748B');
-    s.addText('⚙ Infrastructure Simulated', { x: 5.5, y: 1.3, w: 4, h: 0.4, fontSize: 12, color: MUTED, bold: true, fontFace: 'Arial' });
-    const simItems = ['Distributed network (single node)', 'EVM execution (JS policy engine)', 'Groth16 ZKP (structural sim)', 'PBFT consensus (no network)', 'Multi-hospital DID resolution'];
-    simItems.forEach((item, i) => {
-      s.addText(`○ ${item}`, { x: 5.5, y: 1.8 + i * 0.55, w: 4, h: 0.45, fontSize: 9, color: MUTED, fontFace: 'Arial' });
-    });
-    addSlideNumber(s, 25);
-  }
+  // 28 — Modules 4–8 (Identity)
+  { const s = add(); h(s, 'Modules 4–8: Identity, Session, and Interface'); [['M4: DID Management', TEAL], ['M5: Auth & Session', VIOLET], ['M6: Patient Portal', SUCCESS], ['M7: Staff & Moderator', WARNING], ['M8: Admin Governance', DANGER]].forEach(([t, c], i) => { const col = i < 3 ? i : i - 3; const row = i < 3 ? 0 : 1; const x = 0.5 + col * 3.2; const y = 1.2 + row * 2.5; card(s, x, y, 2.9, 2.2, c); s.addText(t, { x: x + 0.15, y: y + 0.15, w: 2.6, h: 0.4, fontSize: 10, color: c, bold: true, fontFace: 'Arial' }); }); sn(s, n); }
 
-  // Slide 26: Quantum Timeline
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Why This Had to Be Built Now');
-    s.addShape('rect' as any, { x: 0.5, y: 2.5, w: 9, h: 0.06, fill: { color: TEAL } });
-    const markers = [
-      ['2024', 'NIST finalizes\nFIPS 203/204', TEAL],
-      ['2026', 'HelixID deployed\n📍 YOU ARE HERE', SUCCESS],
-      ['2027', 'IBM: 100K+ qubits', WARNING],
-      ['2030', 'Fault-tolerant QC', WARNING],
-      ['2031', 'RSA-2048 vulnerable', DANGER],
-      ['2033', 'ECC-256 vulnerable', DANGER],
-    ];
-    markers.forEach(([year, label, color], i) => {
-      const x = 0.5 + i * 1.6;
-      s.addText(year, { x, y: 2.7, w: 1.4, h: 0.4, fontSize: 11, color, bold: true, align: 'center', fontFace: 'Arial' });
-      s.addText(label, { x, y: 3.1, w: 1.4, h: 0.8, fontSize: 8, color: MUTED, align: 'center', fontFace: 'Arial', lineSpacingMultiple: 1.2 });
-    });
-    s.addText('Building quantum-resistant IAM in 2031 means 10+ years of records are already compromised.\nBuilding it in 2026 means none are.', {
-      x: 1, y: 4.8, w: 8, h: 0.8, fontSize: 13, color: TEAL, bold: true, align: 'center', fontFace: 'Arial', lineSpacingMultiple: 1.3,
-    });
-    addSlideNumber(s, 26);
-  }
+  // 29 — Section Divider: Architecture & Diagrams
+  { const s = add(); divider(s, '08', 'Architecture & Diagrams', 'System architecture, data flow, and UML specifications'); sn(s, n); }
 
-  // Slide 27: Achievements
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'What This Project Delivers');
-    const achievements = [
-      ['⚛', 'First Post-Quantum IAM for Healthcare'],
-      ['⛓', 'Genuinely Functional Blockchain'],
-      ['🪪', 'W3C-Compliant Decentralized Identity'],
-      ['📋', 'On-Chain Smart Contract RBAC'],
-      ['🔬', 'Interactive Tamper Demonstration'],
-      ['🔑', 'Complete IAM Feature Coverage'],
-    ];
-    achievements.forEach(([icon, title], i) => {
-      const col = i % 2;
-      const row = Math.floor(i / 2);
-      const x = 0.5 + col * 4.7;
-      const y = 1.2 + row * 1.6;
-      addCard(s, x, y, 4.4, 1.3);
-      s.addText(`${icon}  ${title}`, { x: x + 0.2, y: y + 0.2, w: 4, h: 0.5, fontSize: 12, color: TEAL, bold: true, fontFace: 'Arial' });
-    });
-    addSlideNumber(s, 27);
-  }
+  // 30 — Architecture
+  { const s = add(); h(s, 'Architecture at a Glance'); s.addText('IDENTITY LAYER', { x: 3, y: 1.1, w: 4, h: 0.3, fontSize: 10, color: MUTED, align: 'center', fontFace: 'Arial', bold: true }); ['Patient DID', 'Staff DID', 'Moderator DID', 'Admin DID'].forEach((did, i) => { const x = 1 + i * 2.2; card(s, x, 1.5, 1.8, 0.5, TEAL); s.addText(did, { x, y: 1.55, w: 1.8, h: 0.4, fontSize: 9, color: TEXT, align: 'center', fontFace: 'Arial' }); }); s.addText('SECURITY LAYER', { x: 3, y: 2.5, w: 4, h: 0.3, fontSize: 10, color: TEAL, align: 'center', fontFace: 'Arial', bold: true }); ['Kyber768 Auth', 'Dilithium Verification', 'Smart Contract RBAC'].forEach((item, i) => { const x = 0.8 + i * 3.1; card(s, x, 2.9, 2.8, 0.7, TEAL); s.addText(item, { x, y: 3, w: 2.8, h: 0.5, fontSize: 10, color: TEXT, align: 'center', fontFace: 'Arial', bold: true }); }); s.addText('INFRASTRUCTURE LAYER', { x: 3, y: 4.2, w: 4, h: 0.3, fontSize: 10, color: MUTED, align: 'center', fontFace: 'Arial', bold: true }); card(s, 1.5, 4.6, 3.5, 0.7, VIOLET); s.addText('Permissioned Blockchain Ledger', { x: 1.5, y: 4.7, w: 3.5, h: 0.5, fontSize: 10, color: TEXT, align: 'center', fontFace: 'Arial' }); sn(s, n); }
 
-  // Slide 28: Architecture Decisions
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Why These Specific Technology Choices');
-    const qas = [
-      ['Why Hyperledger Fabric (permissioned)?', 'Healthcare requires HIPAA-compliant access control over node participation. Permissioned blockchain restricts membership to authorized entities.'],
-      ['Why Dilithium specifically?', 'Selected by NIST after 8-year evaluation as primary standard for digital signatures (FIPS 204). Best balance of signature size, key size, and performance.'],
-      ['Why blockchain for audit?', 'A database log can be modified by an admin. A blockchain log requires compromising 67% of validators simultaneously — fundamentally different security.'],
-    ];
-    qas.forEach(([q, a], i) => {
-      const y = 1.2 + i * 1.7;
-      s.addText(q, { x: 0.5, y, w: 3.5, h: 1.2, fontSize: 11, color: TEAL, bold: true, fontFace: 'Arial', lineSpacingMultiple: 1.3, valign: 'top' });
-      s.addShape('rect' as any, { x: 4.2, y, w: 0.04, h: 1.2, fill: { color: '1E3A5A' } });
-      s.addText(a, { x: 4.5, y, w: 5, h: 1.4, fontSize: 10, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.3, valign: 'top' });
-    });
-    addSlideNumber(s, 28);
-  }
+  // 31 — Flow Diagram
+  { const s = add(); h(s, 'End-to-End IAM Workflow'); s.addText('START → Authentication → DID Resolution → Smart Contract Evaluation → Access Decision → Blockchain Record → END', { x: 0.5, y: 2, w: 9, h: 2, fontSize: 14, color: TEXT, fontFace: 'Arial', lineSpacingMultiple: 1.6, align: 'center' }); s.addText('Every step is cryptographically signed and blockchain-recorded', { x: 1, y: 5, w: 8, h: 0.4, fontSize: 10, color: MUTED, italic: true, align: 'center', fontFace: 'Arial' }); sn(s, n); }
 
-  // Slide 29: Roadmap
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    addHeading(s, 'Production Path Forward');
-    const phases = [
-      ['Phase 1', 'Infrastructure', 'Months 1–3', TEAL, 'Deploy Hyperledger Fabric\nReal zk-SNARK circuits\nHSM integration'],
-      ['Phase 2', 'Integration', 'Months 4–8', VIOLET, 'EHR system connectors\nCross-hospital DID resolution\nMobile patient wallet'],
-      ['Phase 3', 'Scale', 'Months 9–12', SUCCESS, 'Multi-hospital onboarding\nRegulatory compliance\nAnomaly detection'],
-    ];
-    phases.forEach(([phase, title, timeline, color, items], i) => {
-      const x = 0.5 + i * 3.2;
-      addCard(s, x, 1.2, 2.9, 4, color);
-      s.addText(phase, { x: x + 0.15, y: 1.3, w: 2.6, h: 0.3, fontSize: 9, color, bold: true, fontFace: 'Arial' });
-      s.addText(title, { x: x + 0.15, y: 1.6, w: 2.6, h: 0.4, fontSize: 14, color: TEXT, bold: true, fontFace: 'Arial' });
-      s.addText(timeline, { x: x + 0.15, y: 2, w: 2.6, h: 0.3, fontSize: 9, color: MUTED, fontFace: 'Arial' });
-      s.addText(items, { x: x + 0.15, y: 2.5, w: 2.6, h: 2.2, fontSize: 9, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.4, valign: 'top' });
-    });
-    s.addText('The cryptographic architecture requires zero changes for production. The transition is an infrastructure problem, not a security redesign.', {
-      x: 0.5, y: 5.5, w: 9, h: 0.6, fontSize: 10, color: MUTED, italic: true, align: 'center', fontFace: 'Arial',
-    });
-    addSlideNumber(s, 29);
-  }
+  // 32 — ER Diagram
+  { const s = add(); h(s, 'Entity-Relationship Diagram'); ['User (DID, publicKey, role, status)', 'Credential (hash, issuerDID, subjectDID, type)', 'Block (index, hash, previousHash, merkleRoot)', 'Transaction (txHash, type, signerDID, timestamp)', 'Policy (contractAddress, ruleSet, deployerDID)'].forEach((e, i) => { const y = 1.2 + i * 1; card(s, 1.5, y, 7, 0.8, TEAL); s.addText(e, { x: 1.7, y: y + 0.1, w: 6.6, h: 0.6, fontSize: 11, color: TEXT, fontFace: 'Courier New' }); }); sn(s, n); }
 
-  // Slide 30: Closing
-  {
-    const s = pptx.addSlide();
-    s.background = { color: BG };
-    s.addText('The records encrypted today will still exist in 2040.', {
-      x: 1, y: 1.5, w: 8, h: 0.8, fontSize: 18, color: TEXT, align: 'center', fontFace: 'Arial', bold: true,
-    });
-    s.addText('The question is not whether to protect them from quantum attacks.\nThe question is whether you start before or after the breach.', {
-      x: 1, y: 2.5, w: 8, h: 0.8, fontSize: 14, color: MUTED, align: 'center', fontFace: 'Arial', lineSpacingMultiple: 1.4,
-    });
-    s.addText('HelixID answers that question.', {
-      x: 1, y: 3.8, w: 8, h: 0.5, fontSize: 14, color: TEAL, bold: true, align: 'center', fontFace: 'Arial',
-    });
-    s.addText('HelixID', {
-      x: 1, y: 4.5, w: 8, h: 1, fontSize: 48, color: TEAL, bold: true, align: 'center', fontFace: 'Arial',
-    });
-    s.addText('Live Demo: /\nDocumentation: https://github.com/helix-id', {
-      x: 2, y: 5.8, w: 6, h: 0.6, fontSize: 10, color: MUTED, align: 'center', fontFace: 'Courier New', lineSpacingMultiple: 1.3,
-    });
-    addSlideNumber(s, 30);
-  }
+  // 33 — Use Case Diagram
+  { const s = add(); h(s, 'UML Use Case Diagram'); const actors = [['Patient', '3B82F6', ['Login', 'View DID', 'Manage Consent', 'ZKP Proof']], ['Staff', TEAL, ['Request Access', 'Delegate', 'Emergency Override']], ['Moderator', WARNING, ['Approve Requests', 'Review Audit']], ['Admin', VIOLET, ['Onboard Users', 'Deploy Policies', 'Blockchain Explorer']]]; actors.forEach(([name, c, cases], i) => { const y = 1.1 + i * 1.3; s.addText(name as string, { x: 0.5, y, w: 1.8, h: 0.4, fontSize: 11, color: c as string, bold: true, fontFace: 'Arial' }); (cases as string[]).forEach((uc, j) => { s.addText(`○ ${uc}`, { x: 2.5 + j * 2.2, y, w: 2, h: 0.4, fontSize: 9, color: MUTED, fontFace: 'Arial' }); }); }); sn(s, n); }
+
+  // 34 — Class Diagram
+  { const s = add(); h(s, 'UML Class Diagram'); ['CryptoEngine: generateDilithiumKeyPair(), signData(), sha3Hash()', 'BlockchainStore: addTransaction(), mineBlock(), validateChain()', 'SmartContractEngine: evaluate(), deployPolicy()', 'DIDManager: createDID(), resolveDID(), registerOnChain()', 'AuthManager: login(), verifyMFA(), createSession()'].forEach((cls, i) => { const y = 1.2 + i * 1; card(s, 0.5, y, 9, 0.85, TEAL); s.addText(cls, { x: 0.7, y: y + 0.1, w: 8.6, h: 0.65, fontSize: 10, color: 'CBD5E1', fontFace: 'Courier New' }); }); sn(s, n); }
+
+  // 35 — Sequence Diagram
+  { const s = add(); h(s, 'UML Sequence Diagram — Quantum-Safe Auth'); s.addText('User → Browser → CryptoEngine → AuthManager → BlockchainStore', { x: 0.5, y: 1.2, w: 9, h: 0.4, fontSize: 11, color: TEAL, fontFace: 'Courier New', align: 'center' }); const steps = ['1. generateKyberKeyPair()', '2. initiateHandshake(clientPubKey)', '3. kyberEncapsulate → sharedSecret', '4. MFA challenge nonce', '5. signData(privKey, nonce) → Dilithium signature', '6. verifySignature() → true ✓', '7. addTransaction(LOGIN_SUCCESS)', '8. sessionToken = sha3Hash(secret+ts)']; steps.forEach((st, i) => { s.addText(st, { x: 0.8, y: 1.8 + i * 0.58, w: 8.4, h: 0.5, fontSize: 9, color: i === 5 ? SUCCESS : 'CBD5E1', fontFace: 'Courier New' }); }); sn(s, n); }
+
+  // 36 — Activity Diagram
+  { const s = add(); h(s, 'UML Activity Diagram — Access Request Workflow'); s.addText('Hospital Staff | Smart Contract Engine | Department Head | Blockchain Ledger', { x: 0.5, y: 1.2, w: 9, h: 0.3, fontSize: 10, color: TEAL, fontFace: 'Arial', align: 'center', bold: true }); const flow = ['● Fill Access Request Form', '→ Sign with Dilithium Key', '→ Verify Dilithium Signature', '◇ Signature Valid?', '→ Evaluate RBAC Rules', '◇ In Scope?', '→ Forward to Department Head', '◇ Approve?', '→ Sign Approval (Dilithium)', '→ ACCESS_GRANTED tx → Mine Block']; flow.forEach((st, i) => { s.addText(st, { x: 1, y: 1.7 + i * 0.48, w: 8, h: 0.4, fontSize: 9, color: st.startsWith('◇') ? WARNING : 'CBD5E1', fontFace: st.startsWith('◇') ? 'Arial' : 'Courier New' }); }); sn(s, n); }
+
+  // 37 — Tech Stack
+  { const s = add(); h(s, 'Technology Stack'); [['Cryptographic Primitives', VIOLET, 'Dilithium3, Kyber768, SHA3-256, Groth16'], ['Blockchain Infrastructure', TEAL, 'Hyperledger Fabric 2.5 / In-Browser Engine'], ['Identity and Policy', '3B82F6', 'W3C DID Core, Smart Contract RBAC'], ['Application', '64748B', 'React 18, TypeScript, Tailwind, Zustand']].forEach(([name, c, items], i) => { const y = 1.2 + i * 1.3; card(s, 0.5, y, 9, 1.1, c); s.addText(name, { x: 0.8, y: y + 0.05, w: 3, h: 0.4, fontSize: 12, color: c, bold: true, fontFace: 'Arial' }); s.addText(items, { x: 0.8, y: y + 0.45, w: 8.5, h: 0.5, fontSize: 9, color: MUTED, fontFace: 'Arial' }); }); sn(s, n); }
+
+  // 38 — Section Divider: Results & Discussions
+  { const s = add(); divider(s, '09', 'Results & Discussions', 'Implementation evidence, demo results, and analysis'); sn(s, n); }
+
+  // 39 — Implementation
+  { const s = add(); h(s, 'How the System Was Built'); card(s, 0.5, 1.2, 4.5, 4.5); s.addText(`src/\n├── lib/\n│   ├── crypto.ts\n│   ├── blockchain.ts\n│   ├── contracts.ts\n│   └── did.ts\n├── store/\n│   ├── cryptoStore.ts\n│   ├── blockchainStore.ts\n│   └── authStore.ts\n├── pages/\n│   ├── Patient.tsx\n│   ├── Staff.tsx\n│   ├── Moderator.tsx\n│   └── Admin.tsx`, { x: 0.7, y: 1.4, w: 4.1, h: 4.1, fontSize: 8, color: 'CBD5E1', fontFace: 'Courier New', lineSpacingMultiple: 1.3, valign: 'top' }); [['crypto.ts', 'Real post-quantum operations using noble-post-quantum.'], ['blockchain.ts', 'Genuine SHA3-256 block hashing. Real Merkle tree computation.'], ['contracts.ts', 'Policy evaluation engine mirroring Hyperledger Chaincode.']].forEach(([name, desc], i) => { const y = 1.3 + i * 1.4; card(s, 5.3, y, 4.2, 1.2, TEAL); s.addText(name, { x: 5.5, y: y + 0.1, w: 3.8, h: 0.3, fontSize: 10, color: TEAL, bold: true, fontFace: 'Courier New' }); s.addText(desc, { x: 5.5, y: y + 0.45, w: 3.8, h: 0.6, fontSize: 9, color: MUTED, fontFace: 'Arial' }); }); sn(s, n); }
+
+  // 40 — Performance Metrics
+  { const s = add(); h(s, 'Cryptographic Operation Performance'); const benchmarks = [['Dilithium3 KeyGen', '180ms'], ['Block Mining', '85ms'], ['Kyber768 KeyGen', '45ms'], ['Dilithium Sign', '12ms'], ['Dilithium Verify', '8ms'], ['Kyber Encapsulate', '6ms'], ['SHA3-256 Hash', '0.3ms']]; benchmarks.forEach(([op, ms], i) => { const y = 1.2 + i * 0.7; s.addText(op, { x: 0.5, y, w: 3.5, h: 0.5, fontSize: 10, color: 'CBD5E1', fontFace: 'Arial' }); s.addText(ms, { x: 4.2, y, w: 1.5, h: 0.5, fontSize: 10, color: TEAL, bold: true, fontFace: 'Courier New' }); }); card(s, 0.5, 6, 9, 0.6, TEAL); s.addText('RSA-2048 sign: ~3ms — Dilithium carries ~4x overhead, acceptable for IAM frequency.', { x: 0.7, y: 6.1, w: 8.6, h: 0.4, fontSize: 9, color: MUTED, fontFace: 'Arial' }); sn(s, n); }
+
+  // 41 — Comparative Analysis
+  { const s = add(); h(s, 'Comparative Analysis'); const hdr = ['Property', 'Active Directory', 'Prior Blockchain', 'HelixID']; hdr.forEach((ht, i) => { s.addText(ht, { x: 0.5 + i * 2.3, y: 1.1, w: 2.2, h: 0.4, fontSize: 9, color: i === 3 ? TEAL : MUTED, bold: true, fontFace: 'Arial' }); }); [['Quantum-Resistant Auth', '✗', '✗', '✓'], ['Immutable Audit', '✗', '✓', '✓'], ['Decentralized ID', '✗', '△', '✓'], ['Smart Contract RBAC', '✗', '△', '✓'], ['Patient Consent On-Chain', '✗', '✗', '✓'], ['ZKP Credential Proof', '✗', '✗', '△'], ['Break-Glass + Accountability', '△', '✗', '✓'], ['HNDL Safe', '✗', '✗', '✓']].forEach(([p, a, b, c], i) => { const y = 1.6 + i * 0.6; [p, a, b, c].forEach((v, j) => { const color = v === '✓' ? SUCCESS : v === '✗' ? DANGER : v === '△' ? WARNING : 'CBD5E1'; s.addText(v, { x: 0.5 + j * 2.3, y, w: 2.2, h: 0.5, fontSize: 9, color, fontFace: 'Arial' }); }); }); sn(s, n); }
+
+  // 42 — Real vs Simulated
+  { const s = add(); h(s, 'Technical Transparency — What Is Real'); card(s, 0.5, 1.2, 4.4, 4, TEAL); s.addText('🔐 Cryptographically Real', { x: 0.7, y: 1.3, w: 4, h: 0.4, fontSize: 12, color: TEAL, bold: true, fontFace: 'Arial' }); ['SHA3-256 block hashes', 'Dilithium3 key pairs & signing', 'Kyber768 key encapsulation', 'DID computation', 'Chain validation', 'Merkle trees'].forEach((item, i) => { s.addText(`✓ ${item}`, { x: 0.7, y: 1.8 + i * 0.5, w: 4, h: 0.4, fontSize: 9, color: 'CBD5E1', fontFace: 'Arial' }); }); card(s, 5.3, 1.2, 4.4, 4, '64748B'); s.addText('⚙ Infrastructure Simulated', { x: 5.5, y: 1.3, w: 4, h: 0.4, fontSize: 12, color: MUTED, bold: true, fontFace: 'Arial' }); ['Distributed network (single node)', 'EVM execution (JS engine)', 'Groth16 ZKP (structural sim)', 'PBFT consensus', 'Multi-hospital DID resolution'].forEach((item, i) => { s.addText(`○ ${item}`, { x: 5.5, y: 1.8 + i * 0.5, w: 4, h: 0.4, fontSize: 9, color: MUTED, fontFace: 'Arial' }); }); sn(s, n); }
+
+  // 43 — Quantum Timeline
+  { const s = add(); h(s, 'Why This Had to Be Built Now'); s.addShape('rect' as any, { x: 0.5, y: 2.5, w: 9, h: 0.06, fill: { color: TEAL } }); [['2024', 'NIST FIPS', TEAL], ['2026', 'HelixID\n📍 HERE', SUCCESS], ['2027', 'IBM 100K+\nqubits', WARNING], ['2030', 'Fault-tolerant\nQC', WARNING], ['2031', 'RSA-2048\nvulnerable', DANGER], ['2033', 'ECC-256\nvulnerable', DANGER]].forEach(([yr, lbl, c], i) => { const x = 0.5 + i * 1.6; s.addText(yr, { x, y: 2.7, w: 1.4, h: 0.4, fontSize: 11, color: c, bold: true, align: 'center', fontFace: 'Arial' }); s.addText(lbl, { x, y: 3.1, w: 1.4, h: 0.8, fontSize: 8, color: MUTED, align: 'center', fontFace: 'Arial' }); }); sn(s, n); }
+
+  // 44 — Section Divider: Conclusion
+  { const s = add(); divider(s, '10', 'Conclusion & Future Enhancements', 'Summary of contributions and production roadmap'); sn(s, n); }
+
+  // 45 — Conclusion
+  { const s = add(); h(s, 'Conclusion'); card(s, 0.5, 1.1, 9, 3.5, TEAL); s.addText('HelixID presents a blockchain-based quantum-resistant IAM system for multi-institutional healthcare. By adopting NIST FIPS 203/204 as the native cryptographic foundation, the system achieves quantum resistance as the ground floor — not an add-on. Every transaction is Dilithium-signed. Every session is Kyber-established. Every block hash is SHA3-256.', { x: 0.7, y: 1.2, w: 8.6, h: 3.2, fontSize: 11, color: 'CBD5E1', fontFace: 'Arial', lineSpacingMultiple: 1.5, valign: 'top' }); ['🔐 NIST PQC Implemented', '⛓ Real Blockchain SHA3-256', '🪪 W3C DID Compliant', '📋 Complete IAM Coverage'].forEach((a, i) => { s.addText(a, { x: 0.5 + i * 2.3, y: 5, w: 2.2, h: 0.5, fontSize: 9, color: TEAL, fontFace: 'Arial', align: 'center' }); }); sn(s, n); }
+
+  // 46 — Roadmap
+  { const s = add(); h(s, 'Production Path Forward'); [['Phase 1: Infrastructure', TEAL, 'Months 1–3\nDeploy Hyperledger Fabric\nReal zk-SNARK circuits\nHSM integration'], ['Phase 2: Integration', VIOLET, 'Months 4–8\nEHR system connectors\nCross-hospital DID\nMobile patient wallet'], ['Phase 3: Scale', SUCCESS, 'Months 9–12\nMulti-hospital onboarding\nRegulatory compliance\nAnomaly detection']].forEach(([t, c, items], i) => { const x = 0.5 + i * 3.2; card(s, x, 1.2, 2.9, 4, c); s.addText(t, { x: x + 0.15, y: 1.3, w: 2.6, h: 0.4, fontSize: 11, color: c, bold: true, fontFace: 'Arial' }); s.addText(items, { x: x + 0.15, y: 1.8, w: 2.6, h: 3, fontSize: 9, color: MUTED, fontFace: 'Arial', lineSpacingMultiple: 1.4 }); }); sn(s, n); }
+
+  // 47 — Section Divider: References
+  { const s = add(); divider(s, '11', 'References', 'Standards, literature, and technical documentation'); sn(s, n); }
+
+  // 48 — References
+  { const s = add(); h(s, 'References'); const refs = ['[1] NIST FIPS 203 — Module-Lattice-Based Key-Encapsulation Mechanism Standard, 2024', '[2] NIST FIPS 204 — Module-Lattice-Based Digital Signature Standard, 2024', '[3] W3C, Decentralized Identifiers (DIDs) v1.0, 2022', '[4] Hyperledger Fabric v2.5 Documentation, Linux Foundation, 2023', '[5] IEEE Access — A Survey on Blockchain-Based IAM, 2018', '[6] ENISA — Post-Quantum Cryptography: Current State and Quantum Mitigation, 2023', '[7] Journal of Medical Systems — PQC Feasibility for Healthcare, 2023', '[8] noble-post-quantum — P. Miller, MIT License, audited implementations', '[9] snarkjs — iden3, Groth16 zk-SNARK implementation, GPL-3.0']; refs.forEach((r, i) => { s.addText(r, { x: 0.5, y: 1.1 + i * 0.58, w: 9, h: 0.5, fontSize: 9, color: 'CBD5E1', fontFace: 'Arial' }); }); sn(s, n); }
+
+  // 49 — Section Divider: Publications
+  { const s = add(); divider(s, '12', 'Publications', 'Research publications and academic output'); sn(s, n); }
+
+  // 50 — Publications
+  { const s = add(); h(s, 'Publications & Research Contributions'); s.addText('5 Research Papers · 1 Book Chapter · 3 Venues', { x: 0.5, y: 1, w: 9, h: 0.3, fontSize: 10, color: TEAL, fontFace: 'Arial' }); const pubs = [['Post-Quantum Blockchain IAM for Critical Infrastructure', 'IEEE TIFS', 'Pending', VIOLET], ['Continuous Compliance Monitoring', 'ICICV 2025', 'Accepted', SUCCESS], ['Information Theory of Persistent Homology', 'MDPI Mathematics', 'Minor Rev.', WARNING], ['Hybrid QKD + PQC Framework for HNDL', 'NIT Agartala', 'Under Review', '3B82F6'], ['Structured Causal Geometry for ML', 'MDPI MAKE', 'Pending', VIOLET]]; pubs.forEach(([t, v, st, c], i) => { const x = 0.3 + i * 1.9; card(s, x, 1.5, 1.7, 3, c); s.addText('📄', { x: x + 0.1, y: 1.6, w: 1.5, h: 0.4, fontSize: 16, fontFace: 'Arial' }); s.addText(t, { x: x + 0.1, y: 2.1, w: 1.5, h: 1.2, fontSize: 7, color: 'CBD5E1', fontFace: 'Arial', lineSpacingMultiple: 1.3, valign: 'top' }); s.addText(v, { x: x + 0.1, y: 3.4, w: 1.5, h: 0.3, fontSize: 7, color: MUTED, fontFace: 'Arial' }); s.addText(st, { x: x + 0.1, y: 3.8, w: 1.5, h: 0.3, fontSize: 8, color: c, bold: true, fontFace: 'Arial' }); }); card(s, 2.5, 5, 5, 1.2, 'B45309'); s.addText('📖 Book Chapter — Implementation Security & Side-Channel Resistance in PQC', { x: 2.7, y: 5.1, w: 4.6, h: 0.4, fontSize: 9, color: 'FCD34D', bold: true, fontFace: 'Arial' }); s.addText('IGI Global · Accepted', { x: 2.7, y: 5.5, w: 4.6, h: 0.3, fontSize: 8, color: MUTED, fontFace: 'Arial' }); sn(s, n); }
+
+  // 51 — Closing
+  { const s = add(); s.addText('The records encrypted today will still exist in 2040.', { x: 1, y: 1.5, w: 8, h: 0.8, fontSize: 18, color: TEXT, align: 'center', fontFace: 'Arial', bold: true }); s.addText('The question is not whether to protect them from quantum attacks.\nThe question is whether you start before or after the breach.', { x: 1, y: 2.5, w: 8, h: 0.8, fontSize: 14, color: MUTED, align: 'center', fontFace: 'Arial', lineSpacingMultiple: 1.4 }); s.addText('HelixID answers that question.', { x: 1, y: 3.8, w: 8, h: 0.5, fontSize: 14, color: TEAL, bold: true, align: 'center', fontFace: 'Arial' }); s.addText('HelixID', { x: 1, y: 4.5, w: 8, h: 1, fontSize: 48, color: TEAL, bold: true, align: 'center', fontFace: 'Arial' }); sn(s, n); }
 
   await pptx.writeFile({ fileName: 'HelixID-Presentation.pptx' });
 }
