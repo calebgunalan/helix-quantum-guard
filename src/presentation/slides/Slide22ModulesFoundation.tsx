@@ -1,3 +1,5 @@
+import TiltCard from '../components/TiltCard';
+
 const modules = [
   {
     num: 1, name: 'Cryptographic Engine', file: 'crypto.ts', color: '#7c3aed',
@@ -36,21 +38,23 @@ export default function Slide22ModulesFoundation() {
   return (
     <section data-auto-animate data-transition="slide" className="slide-dense-content">
       <h2 style={{ fontSize: '1em' }}>Modules 1–3: Cryptographic and Blockchain Foundation</h2>
-      <div style={{ display: 'flex', gap: '14px', marginTop: '16px' }}>
+      <div className="slide-scroll-inner" style={{ display: 'flex', gap: '14px', marginTop: '16px' }}>
         {modules.map((m) => (
-          <div key={m.num} className="fragment pres-card" style={{ flex: 1, padding: '14px', borderTop: `3px solid ${m.color}` }}>
-            <p style={{ fontSize: '0.55em', color: m.color, fontWeight: 700, marginBottom: '2px' }}>Module {m.num}</p>
-            <h4 style={{ fontSize: '0.68em', color: '#e2e8f0', marginBottom: '4px' }}>{m.name}</h4>
-            <p className="mono" style={{ fontSize: '0.48em', color: '#64748b', marginBottom: '10px' }}>{m.file}</p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {m.funcs.map((f) => (
-                <li key={f} style={{ fontSize: '0.48em', color: '#94a3b8', lineHeight: 1.5, marginBottom: '4px', paddingLeft: '10px', position: 'relative' }}>
-                  <span style={{ position: 'absolute', left: 0, color: m.color }}>›</span>{f}
-                </li>
-              ))}
-            </ul>
-            <p style={{ fontSize: '0.45em', color: '#64748b', marginTop: '8px', marginBottom: 0, fontStyle: 'italic' }}>{m.standards}</p>
-          </div>
+          <TiltCard key={m.num} className="fragment" maxTilt={6} style={{ flex: 1 }}>
+            <div className="pres-card" style={{ padding: '14px', borderTop: `3px solid ${m.color}`, height: '100%' }}>
+              <p style={{ fontSize: '0.55em', color: m.color, fontWeight: 700, marginBottom: '2px' }}>Module {m.num}</p>
+              <h4 style={{ fontSize: '0.68em', color: '#e2e8f0', marginBottom: '4px' }}>{m.name}</h4>
+              <p className="mono" style={{ fontSize: '0.48em', color: '#64748b', marginBottom: '10px' }}>{m.file}</p>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {m.funcs.map((f) => (
+                  <li key={f} style={{ fontSize: '0.48em', color: '#94a3b8', lineHeight: 1.5, marginBottom: '4px', paddingLeft: '10px', position: 'relative' }}>
+                    <span style={{ position: 'absolute', left: 0, color: m.color }}>›</span>{f}
+                  </li>
+                ))}
+              </ul>
+              <p style={{ fontSize: '0.45em', color: '#64748b', marginTop: '8px', marginBottom: 0, fontStyle: 'italic' }}>{m.standards}</p>
+            </div>
+          </TiltCard>
         ))}
       </div>
       <aside className="notes">Foundation layer: crypto primitives, blockchain data structure, and smart contract policy engine.</aside>

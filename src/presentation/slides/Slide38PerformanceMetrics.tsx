@@ -1,3 +1,6 @@
+import TiltCard from '../components/TiltCard';
+import CountUp from '../components/CountUp';
+
 export default function Slide38PerformanceMetrics() {
   return (
     <section>
@@ -21,23 +24,25 @@ export default function Slide38PerformanceMetrics() {
               <div style={{ flex: 1, height: '14px', background: 'rgba(30,41,59,0.5)', borderRadius: '3px', overflow: 'hidden' }}>
                 <div style={{ width: `${Math.max((b.ms / b.max) * 100, 1.5)}%`, height: '100%', background: b.color, borderRadius: '3px', transition: 'width 0.5s' }} />
               </div>
-              <span className="mono" style={{ fontSize: '0.52em', color: b.color, width: '50px', flexShrink: 0 }}>{b.ms}ms</span>
+              <CountUp end={b.ms} decimals={b.ms < 1 ? 1 : 0} suffix="ms" className="mono" style={{ fontSize: '0.52em', color: b.color, width: '50px', flexShrink: 0 }} />
             </div>
           ))}
         </div>
-        <div className="pres-card" style={{ marginTop: '14px', padding: '10px 14px' }}>
-          <p style={{ fontSize: '0.55em', color: '#94a3b8', marginBottom: 0, lineHeight: 1.5 }}>
-            <strong style={{ color: '#cbd5e1' }}>Comparison:</strong> RSA-2048 sign: ~3ms, verify: ~0.1ms.
-            Dilithium carries ~4x overhead for signing — acceptable in IAM contexts where staff authenticate dozens of times daily, not millions.
-          </p>
-        </div>
-        <aside className="notes">All benchmarks measured on standard 2023 laptop, Chrome browser. Dilithium overhead is manageable for IAM frequency.</aside>
+        <TiltCard maxTilt={4}>
+          <div className="pres-card" style={{ marginTop: '14px', padding: '10px 14px' }}>
+            <p style={{ fontSize: '0.55em', color: '#94a3b8', marginBottom: 0, lineHeight: 1.5 }}>
+              <strong style={{ color: '#cbd5e1' }}>Comparison:</strong> RSA-2048 sign: ~3ms, verify: ~0.1ms.
+              Dilithium carries ~4x overhead for signing — acceptable in IAM contexts where staff authenticate dozens of times daily, not millions.
+            </p>
+          </div>
+        </TiltCard>
+        <aside className="notes">All benchmarks measured on standard 2023 laptop, Chrome browser.</aside>
       </section>
 
       {/* Sub-slide B: Security Properties */}
       <section data-auto-animate data-transition="slide" className="slide-dense-content">
         <h2 style={{ fontSize: '1em' }}>Security Analysis — What HelixID Guarantees</h2>
-        <div className="slide-scroll-container" style={{ marginTop: '12px' }}>
+        <div className="slide-scroll-inner" style={{ marginTop: '12px' }}>
           <table className="comparison-table" style={{ fontSize: '0.55em' }}>
             <thead>
               <tr><th style={{ width: '20%' }}>Security Property</th><th style={{ width: '45%' }}>How HelixID Achieves It</th><th style={{ width: '35%' }}>Verification</th></tr>
@@ -51,7 +56,7 @@ export default function Slide38PerformanceMetrics() {
                 ['Identity Integrity', 'DIDs derived from actual crypto public keys. Claiming DID requires private key possession', 'did:helix:[sha3hash(pubkey)] is deterministic'],
                 ['Session Security', 'Session tokens from Kyber shared secret — unpredictable without key encapsulation participation', 'sessionToken = sha3Hash(sharedSecret + timestamp)'],
               ].map(([prop, how, verify]) => (
-                <tr key={prop}>
+                <tr key={prop} className="pres-table-row">
                   <td style={{ color: '#00d4ff', fontWeight: 600 }}>{prop}</td>
                   <td style={{ color: '#94a3b8' }}>{how}</td>
                   <td style={{ color: '#cbd5e1' }}>{verify}</td>
