@@ -6,26 +6,24 @@ const paragraphs = [
 
 export default function Slide10ProblemStatement() {
   return (
-    <section data-auto-animate data-transition="slide">
-      <h2>Problem Statement</h2>
-      <div style={{ marginTop: '24px', maxWidth: '820px' }}>
+    <section data-auto-animate data-transition="fade">
+      <div className="pres-title-bar"><h2>Problem Statement</h2></div>
+      <div style={{ maxWidth: '820px' }}>
         {paragraphs.map((p, i) => (
-          <p key={i} className="fragment" style={{ fontSize: '0.76em', color: '#cbd5e1', lineHeight: 1.85, marginBottom: '24px' }}>
+          <p key={i} className="fragment" style={{ fontSize: '0.76em', color: '#1A2E1A', lineHeight: 1.85, marginBottom: '24px' }}>
             {p}
           </p>
         ))}
       </div>
 
-      <div className="fragment pres-card pres-card-teal" style={{ marginTop: '12px', padding: '16px 24px' }}>
-        <p style={{ fontSize: '0.78em', color: '#00d4ff', marginBottom: 0, fontWeight: 500 }}>
+      <div className="fragment callout" style={{ marginTop: '12px' }}>
+        <p style={{ fontSize: '0.78em', color: '#2C5F2D', marginBottom: 0, fontWeight: 500 }}>
           HelixID is designed to solve all three of these problems within a single, unified architectural framework.
         </p>
       </div>
 
       <aside className="notes">
-        Advance through the three paragraphs one at a time. Each paragraph narrows the problem space:
-        paragraph 1 identifies the classical IAM failure, paragraph 2 shows blockchain alone isn't enough,
-        and paragraph 3 identifies the specific gap HelixID fills.
+        Advance through the three paragraphs one at a time. Each narrows the problem space.
       </aside>
     </section>
   );
