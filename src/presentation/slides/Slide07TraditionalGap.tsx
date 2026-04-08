@@ -8,30 +8,29 @@ const rows = [
 
 export default function Slide07TraditionalGap() {
   return (
-    <section data-auto-animate data-transition="slide">
-      <h2>What Traditional IAM Gets Wrong</h2>
-      <table className="comparison-table" style={{ marginTop: '28px' }}>
+    <section data-auto-animate data-transition="fade">
+      <div className="pres-title-bar"><h2>What Traditional IAM Gets Wrong</h2></div>
+      <table className="comparison-table" style={{ marginTop: '12px' }}>
         <thead>
           <tr>
-            <th style={{ color: '#dc2626', width: '48%' }}>Traditional IAM</th>
-            <th style={{ width: '4%' }} />
-            <th style={{ color: '#00d4ff', width: '48%' }}>What HelixID Does</th>
+            <th style={{ color: '#FFFFFF', width: '48%', background: '#C0392B' }}>Traditional IAM</th>
+            <th style={{ width: '4%', background: '#2C5F2D' }} />
+            <th style={{ color: '#FFFFFF', width: '48%', background: '#2C5F2D' }}>What HelixID Does</th>
           </tr>
         </thead>
         <tbody>
           {rows.map(([old, helix], i) => (
             <tr key={i} className="fragment">
-              <td style={{ fontSize: '0.76em', color: '#94a3b8' }}>{old}</td>
-              <td style={{ color: '#00d4ff', textAlign: 'center' }}>→</td>
-              <td style={{ fontSize: '0.76em', color: '#cbd5e1' }}>{helix}</td>
+              <td style={{ fontSize: '0.76em', color: '#3A5C3A' }}>{old}</td>
+              <td style={{ color: '#7DB85A', textAlign: 'center', fontWeight: 700 }}>→</td>
+              <td style={{ fontSize: '0.76em', color: '#1A2E1A' }}>{helix}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
       <aside className="notes">
-        Each row represents a fundamental architectural decision. Advance one row at a time and narrate each comparison.
-        The key insight: HelixID doesn't patch traditional IAM — it replaces its foundation.
+        Each row represents a fundamental architectural decision.
       </aside>
     </section>
   );
