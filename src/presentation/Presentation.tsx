@@ -101,22 +101,18 @@ export default function Presentation() {
     const deck = new (Reveal as any)(deckRef.current, {
       hash: true,
       controls: true,
-      progress: true,
-      center: true,
-      transition: 'slide',
-      transitionSpeed: 'default',
+      progress: false,
+      center: false,
+      transition: 'fade',
+      transitionSpeed: 'slow',
+      backgroundTransition: 'fade',
       keyboard: true,
       touch: true,
-      width: '100%',
-      height: '100%',
-      margin: 0.04,
-      minScale: 0.2,
-      maxScale: 2.0,
-      disableLayout: false,
-      embedded: false,
+      width: 1280,
+      height: 720,
+      slideNumber: false,
       fragments: true,
       overview: true,
-      // Auto-Animate (Morph transitions)
       autoAnimate: true,
       autoAnimateDuration: 0.9,
       autoAnimateEasing: 'cubic-bezier(0.4, 0, 0.2, 1)',
@@ -162,7 +158,7 @@ export default function Presentation() {
   }, []);
 
   return (
-    <div style={{ width: '100vw', height: '100vh', background: '#0a0f1e' }}>
+    <div style={{ width: '100vw', height: '100vh', background: '#FAFDF6' }}>
       {/* Floating toolbar */}
       <div className="pres-toolbar">
         <button onClick={toggleFullscreen} title="Fullscreen">⛶ Fullscreen</button>
@@ -189,9 +185,9 @@ export default function Presentation() {
           rel="noopener noreferrer"
           style={{
             position: 'fixed', bottom: '50px', right: '24px', zIndex: 40,
-            background: 'rgba(0,212,255,0.15)', border: '1px solid rgba(0,212,255,0.3)',
-            color: '#00d4ff', padding: '8px 16px', borderRadius: '8px', fontSize: '13px',
-            textDecoration: 'none', cursor: 'pointer', backdropFilter: 'blur(8px)',
+            background: 'rgba(125,184,90,0.15)', border: '1px solid rgba(125,184,90,0.3)',
+            color: '#2C5F2D', padding: '8px 16px', borderRadius: '4px', fontSize: '13px',
+            textDecoration: 'none', cursor: 'pointer',
           }}
         >
           🚀 Jump to Demo
