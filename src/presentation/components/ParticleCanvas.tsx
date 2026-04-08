@@ -56,7 +56,7 @@ export default function ParticleCanvas() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 212, 255, ${brightness})`;
+        ctx.fillStyle = `rgba(44, 95, 45, ${brightness})`;
         ctx.fill();
       }
 
@@ -68,7 +68,7 @@ export default function ParticleCanvas() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 212, 255, ${0.15 * (1 - d / 150)})`;
+            ctx.strokeStyle = `rgba(125, 184, 90, ${0.15 * (1 - d / 150)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

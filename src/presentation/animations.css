@@ -1,18 +1,18 @@
-/* Cursor spotlight */
+/* Cursor spotlight — botanical version */
 .reveal::after {
   content: '';
   position: fixed;
   inset: 0;
   background: radial-gradient(
     600px circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
-    rgba(0, 212, 255, 0.04),
+    rgba(125, 184, 90, 0.04),
     transparent 70%
   );
   pointer-events: none;
   z-index: 9999;
 }
 
-/* Fragment animation override — rise + fade */
+/* Fragment animation override */
 .reveal .slides section .fragment {
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -26,12 +26,7 @@
   filter: blur(0);
 }
 
-/* Previous fragments dim when new one appears */
-.reveal .slides section .fragment.visible ~ .fragment.visible {
-  /* keep full */
-}
-
-/* TiltCard shine layer */
+/* TiltCard shine */
 .tilt-card-shine {
   position: absolute;
   inset: 0;
@@ -46,12 +41,12 @@
   opacity: 1;
 }
 
-/* Card hover glow */
+/* Card hover glow — botanical */
 .pres-card-interactive {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .pres-card-interactive:hover {
-  box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.3), 0 0 20px rgba(0, 212, 255, 0.15);
+  box-shadow: 0 0 0 1px rgba(125,184,90,0.3), 0 0 20px rgba(125,184,90,0.12);
 }
 
 /* Table row hover */
@@ -60,7 +55,7 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 .pres-table-row:hover {
-  background-color: rgba(0, 212, 255, 0.06);
+  background-color: rgba(125,184,90,0.08);
   transform: scale(1.01);
 }
 .pres-table-row::before {
@@ -70,7 +65,7 @@
   top: 0;
   bottom: 0;
   width: 3px;
-  background: #00d4ff;
+  background: var(--pres-accent, #7DB85A);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -79,7 +74,7 @@
   transform: scaleX(1);
 }
 
-/* Animated gradient border for publications */
+/* Aura border */
 @keyframes gradient-border-spin {
   0% { --angle: 0deg; }
   100% { --angle: 360deg; }
@@ -93,24 +88,24 @@
 
 .gradient-border-card {
   position: relative;
-  background: rgba(15, 23, 42, 0.9);
-  border-radius: 12px;
+  background: var(--pres-bg-card, #FFFFFF);
+  border-radius: 4px;
   z-index: 0;
 }
 .gradient-border-card::before {
   content: '';
   position: absolute;
   inset: -2px;
-  border-radius: 14px;
-  background: conic-gradient(from var(--angle, 0deg), #00d4ff, #7c3aed, #00d4ff);
+  border-radius: 6px;
+  background: conic-gradient(from var(--angle, 0deg), #7DB85A, #2C5F2D, #7DB85A);
   z-index: -1;
   animation: gradient-border-spin 3s linear infinite;
 }
 
-/* Publication aura cards */
+/* Publication aura */
 .pub-aura-wrap {
   position: relative;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 2px;
   background: conic-gradient(from var(--angle, 0deg), var(--aura-c1), var(--aura-c2), var(--aura-c1));
   animation: gradient-border-spin 4s linear infinite;
@@ -121,13 +116,13 @@
   padding: 3px;
   animation-duration: 2s;
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
 }
 .pub-aura-wrap:hover .pub-click-hint { opacity: 1 !important; }
 
 .pub-card-inner {
-  background: rgba(15,23,42,0.95);
-  border-radius: 10px;
+  background: var(--pres-bg-card, #FFFFFF);
+  border-radius: 3px;
   padding: 12px;
   height: 100%;
   display: flex;
@@ -140,34 +135,35 @@
   width: 80vw;
   max-width: 800px;
   max-height: 85vh;
-  background: rgba(15,23,42,0.98);
-  border-radius: 16px;
+  background: var(--pres-bg-card, #FFFFFF);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0,0,0,0.3);
 }
 .pub-modal-panel::before {
   content: '';
   position: absolute;
   inset: -3px;
-  border-radius: 18px;
+  border-radius: 10px;
   background: conic-gradient(from var(--angle, 0deg), var(--aura-c1), var(--aura-c2), var(--aura-c1));
   z-index: -1;
   animation: gradient-border-spin 6s linear infinite;
 }
 
-/* Slide scroll inner for dense content */
+/* Scroll inner */
 .slide-scroll-inner {
   overflow-y: auto !important;
   max-height: 80vh !important;
   scrollbar-width: thin !important;
-  scrollbar-color: rgba(0,212,255,0.4) transparent !important;
+  scrollbar-color: rgba(125,184,90,0.4) transparent !important;
   padding-right: 0.5rem !important;
   flex: 1;
   min-height: 0;
 }
 
-/* Pulse badge */
+/* Badge pulse */
 @keyframes badge-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
@@ -176,7 +172,7 @@
   animation: badge-pulse 2s ease-in-out infinite;
 }
 
-/* SVG path draw animation */
+/* SVG path draw */
 @keyframes draw-path {
   to { stroke-dashoffset: 0; }
 }
@@ -184,48 +180,16 @@
   animation: draw-path 0.6s ease-out forwards;
 }
 
-/* Binary rain (ambient) */
-@keyframes binary-fall {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 0.02; }
-  90% { opacity: 0.02; }
-  100% { transform: translateY(100vh); opacity: 0; }
-}
-.binary-stream span {
-  animation: binary-fall linear infinite;
-  position: absolute;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: #00d4ff;
-  opacity: 0;
-}
-
-/* Grid pulse (ambient) */
-@keyframes grid-dot-pulse {
-  0%, 100% { opacity: 0.03; }
-  50% { opacity: 0.15; }
-}
-
-/* Breathing for section numbers */
+/* Breathing section number */
 @keyframes section-breathe {
-  0%, 100% { transform: translate(-50%, -55%) scale(1) rotate(0deg); }
-  50% { transform: translate(-50%, -55%) scale(1.03) rotate(1deg); }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
 }
 .section-num-breathe {
   animation: section-breathe 4s ease-in-out infinite;
 }
 
-/* Number counter flip */
-@keyframes flip-up-out {
-  from { transform: perspective(200px) rotateX(0deg); opacity: 1; }
-  to { transform: perspective(200px) rotateX(-90deg); opacity: 0; }
-}
-@keyframes flip-up-in {
-  from { transform: perspective(200px) rotateX(90deg); opacity: 0; }
-  to { transform: perspective(200px) rotateX(0deg); opacity: 1; }
-}
-
-/* Performance - promote animated elements */
+/* Performance */
 .will-change-transform {
   will-change: transform;
 }
@@ -234,7 +198,6 @@
 @media (prefers-reduced-motion: reduce) {
   .reveal::after,
   .tilt-card-shine,
-  .binary-stream span,
   .section-num-breathe,
   .gradient-border-card::before,
   .badge-pulse,
